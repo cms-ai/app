@@ -58,6 +58,18 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    productFlavors {
+        prod {
+            resValue "string", "app_name", "Livskalla"
+            applicationIdSuffix ".prod"
+        }
+
+        dev {
+            resValue "string", "app_name", "Livskalla-Dev"
+            applicationIdSuffix ".dev"
+        }
+    }
 }
 
 flutter {

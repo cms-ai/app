@@ -1,10 +1,18 @@
 import 'package:app/utils/app_theme.dart';
+import 'package:app/utils/utils.dart';
 import 'package:app/views/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
+  // Get current enviroment
+  const String appFlavor = String.fromEnvironment('FLUTTER_APP_FLAVOR');
+  final AppEnviroment currentEnv = AppEnviroment.values.firstWhere(
+    (element) => appFlavor == element.name,
+    orElse: () => AppEnviroment.dev,
+  );
+  AppFlavorsUtils.baseUrl = currentEnv.getCurrentBaseUrl;
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -19,16 +27,16 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       // Use builder only if you need to use library outside ScreenUtilInit context
-      builder: (_ , child) {
+      builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'First Method',
           // You can use the library anywhere in the app even in theme
-           theme: AppTheme.lightTheme,
+          theme: AppTheme.lightTheme,
           home: child,
         );
       },
-      child: const OnBoardingScreen(),
+      child: const AuthScreen(),
     );
   }
 }
