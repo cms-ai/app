@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "77172229043",
+    "project_id": "livskalla-dev-b3021",
+    "storage_bucket": "livskalla-dev-b3021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77172229043:android:1330c7e4c041e77b5bc1c6",
+        "android_client_info": {
+          "package_name": "com.livskalla.app.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNeqntvaLlwbl-kD9f-TWlcz_7S1g6UHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

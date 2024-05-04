@@ -58,14 +58,16 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-
+    flavorDimensions "default"
     productFlavors {
         prod {
+            dimension "default"
             resValue "string", "app_name", "Livskalla"
             applicationIdSuffix ".prod"
         }
 
         dev {
+            dimension "default"
             resValue "string", "app_name", "Livskalla-Dev"
             applicationIdSuffix ".dev"
         }

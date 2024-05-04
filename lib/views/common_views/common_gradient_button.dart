@@ -38,6 +38,7 @@ class CommonGradientButton extends StatelessWidget {
             fontFamily: FontFamily.dMSans,
             fontSize: 13.sp,
             color: AppColors.textColor1.withOpacity(.87),
+            fontWeight: FontWeight.w700
           ),
         ),
       ),

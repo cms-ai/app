@@ -5,15 +5,27 @@ import 'package:app/gen/fonts.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
 
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+  
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), () => {
+      context.goNamed(AppRouters.introRoute)
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

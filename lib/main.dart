@@ -12,7 +12,10 @@ void main() {
     (element) => appFlavor == element.name,
     orElse: () => AppEnviroment.dev,
   );
+  // set base url with specified env
   AppFlavorsUtils.baseUrl = currentEnv.getCurrentBaseUrl;
+
+  // main run app
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -28,12 +31,11 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
-        return MaterialApp(
+        return MaterialApp.router(
+          routerConfig: Routers.routers,
           debugShowCheckedModeBanner: false,
           title: 'First Method',
-          // You can use the library anywhere in the app even in theme
           theme: AppTheme.lightTheme,
-          home: child,
         );
       },
       child: const AuthScreen(),

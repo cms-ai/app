@@ -4,8 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
+
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  final PageController pageController = PageController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +52,21 @@ class AuthScreen extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
             ),
           ),
-          Positioned.fill(child: LoginView())
+          Positioned.fill(
+            child: PageView(
+              controller: pageController,
+              children: [
+                SignUpView(
+                  onTap: () => pageController.animateToPage(1,
+                      duration:Duration(milliseconds: 200), curve: Curves.easeInOut),
+                ),
+                LoginView(
+                  onTap: () => pageController.animateToPage(0,
+                      duration: Duration(milliseconds: 200), curve: Curves.easeInOut),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

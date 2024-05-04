@@ -17,5 +17,5 @@ extension AppEnviromentExt on AppEnviroment {
 }
 
 class AppFlavorsUtils {
-  static String baseUrl = 'exmaple.dev';
+  static String baseUrl = '';
 }
