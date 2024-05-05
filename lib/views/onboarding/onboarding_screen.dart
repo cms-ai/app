@@ -19,7 +19,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 3), () => {
       context.goNamed(AppRouters.introRoute)

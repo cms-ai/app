@@ -1,4 +1,3 @@
-import 'package:app/utils/app_theme.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/views/exports.dart';
 import 'package:flutter/material.dart';

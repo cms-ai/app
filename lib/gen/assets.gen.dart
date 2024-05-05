@@ -14,6 +14,13 @@ import 'package:flutter/services.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  $AssetsIconsBottomNavBarGen get bottomNavBar =>
+      const $AssetsIconsBottomNavBarGen();
+
+  /// File path: assets/icons/ic_arrow_down.svg
+  SvgGenImage get icArrowDown =>
+      const SvgGenImage('assets/icons/ic_arrow_down.svg');
+
   /// File path: assets/icons/ic_bank_america.svg
   SvgGenImage get icBankAmerica =>
       const SvgGenImage('assets/icons/ic_bank_america.svg');
@@ -26,6 +33,12 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/ic_citi.svg
   SvgGenImage get icCiti => const SvgGenImage('assets/icons/ic_citi.svg');
+
+  /// File path: assets/icons/ic_expense.svg
+  SvgGenImage get icExpense => const SvgGenImage('assets/icons/ic_expense.svg');
+
+  /// File path: assets/icons/ic_income.svg
+  SvgGenImage get icIncome => const SvgGenImage('assets/icons/ic_income.svg');
 
   /// File path: assets/icons/ic_jago.svg
   SvgGenImage get icJago => const SvgGenImage('assets/icons/ic_jago.svg');
@@ -42,10 +55,13 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
+        icArrowDown,
         icBankAmerica,
         icBca,
         icChase,
         icCiti,
+        icExpense,
+        icIncome,
         icJago,
         icMandiri,
         icSignUpSuccess,
@@ -64,6 +80,34 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [logoWithImage1];
+}
+
+class $AssetsIconsBottomNavBarGen {
+  const $AssetsIconsBottomNavBarGen();
+
+  /// File path: assets/icons/bottom_nav_bar/ic_add.svg
+  SvgGenImage get icAdd =>
+      const SvgGenImage('assets/icons/bottom_nav_bar/ic_add.svg');
+
+  /// File path: assets/icons/bottom_nav_bar/ic_budget.svg
+  SvgGenImage get icBudget =>
+      const SvgGenImage('assets/icons/bottom_nav_bar/ic_budget.svg');
+
+  /// File path: assets/icons/bottom_nav_bar/ic_home.svg
+  SvgGenImage get icHome =>
+      const SvgGenImage('assets/icons/bottom_nav_bar/ic_home.svg');
+
+  /// File path: assets/icons/bottom_nav_bar/ic_profile.svg
+  SvgGenImage get icProfile =>
+      const SvgGenImage('assets/icons/bottom_nav_bar/ic_profile.svg');
+
+  /// File path: assets/icons/bottom_nav_bar/ic_transaction.svg
+  SvgGenImage get icTransaction =>
+      const SvgGenImage('assets/icons/bottom_nav_bar/ic_transaction.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values =>
+      [icAdd, icBudget, icHome, icProfile, icTransaction];
 }
 
 class $AssetsImagesIntroGen {

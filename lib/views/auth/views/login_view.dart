@@ -26,14 +26,14 @@ class _LoginViewState extends State<LoginView> {
           Assets.images.logoWithImage1.image(height: 100),
           const Spacer(),
           CommonTextField(
-            customMargin: EdgeInsets.only(bottom: 14),
+            customMargin: const EdgeInsets.only(bottom: 14),
             hintText: "Email",
             onChanged: (value) {
               // TODO: on change username,
             },
           ),
           CommonTextField(
-            customMargin: EdgeInsets.only(bottom: 40),
+            customMargin: const EdgeInsets.only(bottom: 40),
             hintText: "Password",
             onChanged: (value) {
               // TODO: on change pass,

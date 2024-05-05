@@ -1,5 +1,4 @@
 import 'package:app/gen/export.dart';
-import 'package:app/gen/fonts.gen.dart';
 import 'package:app/views/exports.dart';
 import 'package:app/views/new_account_bank/enums.dart';
 import 'dart:ui';
@@ -76,10 +75,7 @@ class _SignUpSuccessScreenState extends State<SignUpSuccessScreen> {
                     customWidth: double.infinity,
                     contentButton: "Go to dashboard",
                     onTap: () {
-                      context.goNamed(AppRouters.newAccountBankRoute,
-                          queryParameters: {
-                            "action": NewAccountActionEnum.add.name
-                          });
+                      context.goNamed(AppRouters.dashBoardRoute);
                     },
                   ),
                 ],

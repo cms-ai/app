@@ -10,6 +10,7 @@ class AppRouters {
   static const String setUpAccountIntroRoute = "setUpAccountIntroRoute";
   static const String newAccountBankRoute = "newAccountBankRoute";
   static const String signUpSuccessRoute = "signUpSuccessRoute";
+  static const String dashBoardRoute = "dashBoardRoute";
 
   static String getRoutePath(String value) {
     return "/$value";
@@ -77,6 +78,14 @@ class Routers {
       path: AppRouters.getRoutePath(AppRouters.signUpSuccessRoute),
       builder: (BuildContext context, GoRouterState state) {
         return const SignUpSuccessScreen();
+      },
+      routes: const <RouteBase>[],
+    ),
+    GoRoute(
+      name: AppRouters.dashBoardRoute,
+      path: AppRouters.getRoutePath(AppRouters.dashBoardRoute),
+      builder: (BuildContext context, GoRouterState state) {
+        return const DashBoardScreen();
       },
       routes: const <RouteBase>[],
     ),

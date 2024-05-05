@@ -26,21 +26,21 @@ class _SignUpViewState extends State<SignUpView> {
           Assets.images.logoWithImage1.image(height: 100),
           const Spacer(),
           CommonTextField(
-            customMargin: EdgeInsets.only(bottom: 14),
+            customMargin: const EdgeInsets.only(bottom: 14),
             hintText: "Username",
             onChanged: (value) {
               // TODO: on change username,
             },
           ),
           CommonTextField(
-            customMargin: EdgeInsets.only(bottom: 14),
+            customMargin: const EdgeInsets.only(bottom: 14),
             hintText: "Email",
             onChanged: (value) {
               // TODO: on change username,
             },
           ),
           CommonTextField(
-            customMargin: EdgeInsets.only(bottom: 40),
+            customMargin:const EdgeInsets.only(bottom: 40),
             hintText: "Password",
             onChanged: (value) {
               // TODO: on change pass,
@@ -65,13 +65,11 @@ class _SignUpViewState extends State<SignUpView> {
           RichText(
             text: TextSpan(
               children: [
-                TextSpan(text: "Already have an account? "),
+                const TextSpan(text: "Already have an account? "),
                 TextSpan(
                   text: "Login",
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () =>
-                      widget.onTap()
-                    ,
+                    ..onTap = () => widget.onTap(),
                   style: TextStyle(
                       color: AppColors.textColor2,
                       fontWeight: FontWeight.bold,

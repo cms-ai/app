@@ -1,5 +1,4 @@
 import 'package:app/gen/export.dart';
-import 'package:app/gen/fonts.gen.dart';
 import 'package:app/views/exports.dart';
 import 'package:app/views/new_account_bank/enums.dart';
 import 'dart:ui';
@@ -24,7 +23,6 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
   @override
   void initState() {
     super.initState();
-    print("=== ${widget.action}");
   }
 
   @override
@@ -138,7 +136,7 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CommonTextField(
-                        customMargin: EdgeInsets.only(bottom: 14),
+                        customMargin: const EdgeInsets.only(bottom: 14),
                         hintText: "Name",
                         textFieldStyle: TextFieldStyleEnum.border,
                         onChanged: (value) {
@@ -146,7 +144,7 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
                         },
                       ),
                       CommonTextField(
-                        customMargin: EdgeInsets.only(bottom: 14),
+                        customMargin: const EdgeInsets.only(bottom: 14),
                         readOnly: true,
                         hintText: "Account Type",
                         textFieldStyle: TextFieldStyleEnum.border,

@@ -1,10 +1,8 @@
 import 'package:app/views/exports.dart';
 import 'package:app/views/intro/views/exports.dart';
-import 'package:flutter/widgets.dart';
 import 'dart:ui';
 
 import 'package:app/gen/assets.gen.dart';
-import 'package:app/gen/fonts.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
