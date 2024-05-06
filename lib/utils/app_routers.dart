@@ -1,5 +1,6 @@
 import 'package:app/views/exports.dart';
 import 'package:app/views/new_account_bank/enums.dart';
+import 'package:app/views/transaction/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,6 +12,7 @@ class AppRouters {
   static const String newAccountBankRoute = "newAccountBankRoute";
   static const String signUpSuccessRoute = "signUpSuccessRoute";
   static const String dashBoardRoute = "dashBoardRoute";
+  static const String transactionRoute = "transactionRoute";
 
   static String getRoutePath(String value) {
     return "/$value";
@@ -87,7 +89,22 @@ class Routers {
       builder: (BuildContext context, GoRouterState state) {
         return const DashBoardScreen();
       },
-      routes: const <RouteBase>[],
+      routes: <RouteBase>[
+        GoRoute(
+          name: AppRouters.transactionRoute,
+          path:  AppRouters.transactionRoute,
+          builder: (BuildContext context, GoRouterState state) {
+            return TransactionScreen(
+              actionType: TransactionActionEnum.values
+                  .where(
+                    (element) =>
+                        element.name == state.uri.queryParameters["action"]!,
+                  )
+                  .first,
+            );
+          },
+        ),
+      ],
     ),
   ]);
 }

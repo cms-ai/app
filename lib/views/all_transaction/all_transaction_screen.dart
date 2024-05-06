@@ -1,19 +1,17 @@
 import 'dart:io';
-
-import 'package:app/views/dash_board/views/exports.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DashBoardScreen extends StatefulWidget {
-  const DashBoardScreen({super.key});
+class AllTransactionScreen extends StatefulWidget {
+  const AllTransactionScreen({super.key});
 
   @override
-  State<DashBoardScreen> createState() => _DashBoardScreenState();
+  State<AllTransactionScreen> createState() => _AllTransactionScreenState();
 }
 
-class _DashBoardScreenState extends State<DashBoardScreen> {
+class _AllTransactionScreenState extends State<AllTransactionScreen> {
   @override
   void dispose() {
     super.dispose();
@@ -31,7 +29,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ),
           ),
           Positioned(
-            top: - (size.height * 1.1),
+            top: -(size.height * 1.1),
             left: size.width * 0.4,
             child: Container(
               width: 359.w,
@@ -67,19 +65,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           Positioned.fill(
             bottom: 60.h + (Platform.isIOS ? 16.h : 0.h),
             child: const SafeArea(
-              bottom: false,
-              child: IndexedStack(
-                index: 1,
-                children: [
-                  HomeScreen(),
-                  TransitionBodyScreen(),
-                  BudgetScreen(),
-                  ProfileScreen(),
-                ],
-              ),
-            ),
+                bottom: false,
+                child: Column(
+                  children: [],
+                )),
           ),
-          const Positioned(bottom: 0, left: 0, right: 0, child: BottomNavBar())
         ],
       ),
     );

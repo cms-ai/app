@@ -14,6 +14,7 @@ class CommonTextField extends StatefulWidget {
   final Function(String value)? onChanged;
   final TextFieldStyleEnum textFieldStyle;
   final bool readOnly;
+  final TextEditingController? controller;
   const CommonTextField({
     super.key,
     this.customMargin,
@@ -21,6 +22,7 @@ class CommonTextField extends StatefulWidget {
     this.onChanged,
     this.textFieldStyle = TextFieldStyleEnum.initial,
     this.readOnly = false,
+    this.controller,
   });
 
   @override
@@ -48,6 +50,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
         borderRadius: BorderRadius.circular(15.r),
       ),
       child: TextField(
+        controller: widget.controller,
         readOnly: widget.readOnly,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -78,6 +81,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
         ),
       ),
       child: TextField(
+        controller: widget.controller,
         readOnly: widget.readOnly,
         decoration: InputDecoration(
           border: InputBorder.none,
