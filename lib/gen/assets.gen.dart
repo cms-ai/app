@@ -28,6 +28,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_bca.svg
   SvgGenImage get icBca => const SvgGenImage('assets/icons/ic_bca.svg');
 
+  /// File path: assets/icons/ic_bugdet_limit.svg
+  SvgGenImage get icBugdetLimit =>
+      const SvgGenImage('assets/icons/ic_bugdet_limit.svg');
+
   /// File path: assets/icons/ic_chase.svg
   SvgGenImage get icChase => const SvgGenImage('assets/icons/ic_chase.svg');
 
@@ -58,6 +62,7 @@ class $AssetsIconsGen {
         icArrowDown,
         icBankAmerica,
         icBca,
+        icBugdetLimit,
         icChase,
         icCiti,
         icExpense,
