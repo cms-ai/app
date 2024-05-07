@@ -1,26 +1,18 @@
 import 'dart:io';
 
+import 'package:app/views/dash_board/domain/repositories.dart';
 import 'package:app/views/dash_board/views/exports.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DashBoardScreen extends StatefulWidget {
+class DashBoardScreen extends ConsumerWidget {
   const DashBoardScreen({super.key});
 
   @override
-  State<DashBoardScreen> createState() => _DashBoardScreenState();
-}
-
-class _DashBoardScreenState extends State<DashBoardScreen> {
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
@@ -31,7 +23,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ),
           ),
           Positioned(
-            top: - (size.height * 1.1),
+            top: -(size.height * 1.1),
             left: size.width * 0.4,
             child: Container(
               width: 359.w,
@@ -66,15 +58,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ),
           Positioned.fill(
             bottom: 60.h + (Platform.isIOS ? 16.h : 0.h),
-            child: const SafeArea(
+            child: SafeArea(
               bottom: false,
               child: IndexedStack(
-                index: 3,
+                index: ref.watch(navBarProvider),
                 children: [
-                  HomeScreen(),
-                  TransitionBodyScreen(),
-                  BudgetScreen(),
-                  ProfileScreen(),
+                  const HomeScreen(),
+                  const TransitionBodyScreen(),
+                  Container(),
+                  const BudgetScreen(),
+                  const ProfileScreen(),
                 ],
               ),
             ),

@@ -1,24 +1,24 @@
 import 'dart:io';
 
 import 'package:app/utils/utils.dart';
+import 'package:app/views/dash_board/domain/repositories.dart';
 import 'package:app/views/dash_board/views/exports.dart';
 import 'package:app/views/transaction/enums.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-class BottomNavBar extends StatefulWidget {
+class BottomNavBar extends ConsumerWidget {
   const BottomNavBar({super.key});
 
-  @override
-  State<BottomNavBar> createState() => _BottomNavBarState();
-}
+  // BottomNavBarEnum currentNavBar = BottomNavBarEnum.home;
 
-class _BottomNavBarState extends State<BottomNavBar> {
-  BottomNavBarEnum currentNavBar = BottomNavBarEnum.home;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentNavBarIndex =
+        BottomNavBarEnum.values[ref.watch(navBarProvider)];
     return Column(
       children: [
         Container(
@@ -39,11 +39,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     ...BottomNavBarEnum.values.map(
                       (value) => _buildNavBarItem(context,
                           currentNavBar: value,
-                          isSelected: value == currentNavBar, onTap: () {
+                          isSelected: value == currentNavBarIndex, onTap: () {
                         if (value != BottomNavBarEnum.add) {
-                          setState(() {
-                            currentNavBar = value;
-                          });
+                          ref.read(navBarProvider.notifier).state =
+                              BottomNavBarEnum.values.indexOf(value);
                         } else {
                           context.goNamed(AppRouters.transactionRoute,
                               queryParameters: {
