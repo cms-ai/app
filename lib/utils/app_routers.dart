@@ -1,6 +1,7 @@
 import 'package:app/views/exports.dart';
 import 'package:app/views/new_account_bank/enums.dart';
 import 'package:app/views/transaction/enums.dart';
+import 'package:app/views/transaction_details/transaction_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,10 +15,12 @@ class AppRouters {
   static const String signUpSuccessRoute = "signUpSuccessRoute";
   static const String dashBoardRoute = "dashBoardRoute";
   static const String transactionRoute = "transactionRoute";
+  static const String editTransactionRoute = "editTransactionRoute";
   static const String accountRoute = "accountRoute";
   static const String accountDetailsRoute = "accountDetailsRoute";
   static const String budgetDetailsRoute = "budgetDetailsRoute";
   static const String budgetRoute = "budgetRoute";
+  static const String transactionDetailRoute = "transactionDetailRoute";
 
   static String getRoutePath(String value) {
     return "/$value";
@@ -117,6 +120,33 @@ class Routers {
                   .first,
             );
           },
+          routes: [
+            GoRoute(
+              name: AppRouters.transactionDetailRoute,
+              path: AppRouters.transactionDetailRoute,
+              builder: (BuildContext context, GoRouterState state) {
+                return const TransactionDetailsScreen();
+              },
+              routes: <RouteBase>[
+                GoRoute(
+                  name: AppRouters.editTransactionRoute,
+                  path: AppRouters.editTransactionRoute,
+                  builder: (BuildContext context, GoRouterState state) {
+                    return TransactionScreen(
+                      actionType: TransactionActionEnum.values
+                          .where(
+                            (element) =>
+                                element.name ==
+                                state.uri.queryParameters["action"]!,
+                          )
+                          .first,
+                    );
+                  },
+                  routes: [],
+                ),
+              ],
+            ),
+          ],
         ),
         GoRoute(
           name: AppRouters.budgetDetailsRoute,

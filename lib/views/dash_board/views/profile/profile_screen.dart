@@ -80,14 +80,14 @@ class ProfileScreen extends StatelessWidget {
                     context.goNamed(AppRouters.accountRoute);
                   },
                 ),
+                // SizedBox(height: 20.h),
+                // _buildOtion(
+                //     content: "Settings",
+                //     iconWidget: Assets.icons.icSettings.svg(),
+                //     onTap: () {}),
                 SizedBox(height: 20.h),
                 _buildOtion(
-                    content: "Settings",
-                    iconWidget: Assets.icons.icSettings.svg(),
-                    onTap: () {}),
-                SizedBox(height: 20.h),
-                _buildOtion(
-                    content: "Export Data",
+                    content: "Delete account",
                     iconWidget: Assets.icons.icUpload.svg(),
                     onTap: () {}),
                 SizedBox(height: 20.h),
