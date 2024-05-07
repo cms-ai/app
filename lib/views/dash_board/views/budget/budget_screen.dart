@@ -49,12 +49,11 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   child: ListView.separated(
                       itemBuilder: (context, index) {
                         return _buildBudgetItem(
-                          currentValue: 1000,
-                          maxValue: 1200,
-                          onTap: () {
-                            context.goNamed(AppRouters.budgetDetailsRoute);
-                          }
-                        );
+                            currentValue: 1000,
+                            maxValue: 1200,
+                            onTap: () {
+                              context.goNamed(AppRouters.budgetDetailsRoute);
+                            });
                       },
                       separatorBuilder: (context, index) {
                         return SizedBox(
@@ -69,6 +68,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   contentButton: "Create a budget",
                   onTap: () {
                     // TODO: Navigate to budget item details
+                    context.goNamed(AppRouters.budgetRoute);
                   },
                 ),
               ],
@@ -100,7 +100,8 @@ class _BudgetScreenState extends State<BudgetScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                   decoration: BoxDecoration(
                       color: AppColors.textColor2.withOpacity(.3),
                       border: Border.all(

@@ -17,6 +17,7 @@ class AppRouters {
   static const String accountRoute = "accountRoute";
   static const String accountDetailsRoute = "accountDetailsRoute";
   static const String budgetDetailsRoute = "budgetDetailsRoute";
+  static const String budgetRoute = "budgetRoute";
 
   static String getRoutePath(String value) {
     return "/$value";
@@ -95,6 +96,14 @@ class Routers {
         return const DashBoardScreen();
       },
       routes: <RouteBase>[
+        GoRoute(
+          name: AppRouters.budgetRoute,
+          path: AppRouters.budgetRoute,
+          builder: (BuildContext context, GoRouterState state) {
+            return BudgetScreen();
+          },
+          routes: const <RouteBase>[],
+        ),
         GoRoute(
           name: AppRouters.transactionRoute,
           path: AppRouters.transactionRoute,
