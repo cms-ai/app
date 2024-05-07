@@ -4,6 +4,7 @@ import 'package:app/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -73,9 +74,12 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 _buildOtion(
-                    content: "Account",
-                    iconWidget: Assets.icons.icAccount.svg(),
-                    onTap: () {}),
+                  content: "Account",
+                  iconWidget: Assets.icons.icAccount.svg(),
+                  onTap: () {
+                    context.goNamed(AppRouters.accountRoute);
+                  },
+                ),
                 SizedBox(height: 20.h),
                 _buildOtion(
                     content: "Settings",

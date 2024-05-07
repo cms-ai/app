@@ -156,7 +156,9 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
                       SizedBox(height: 40.h),
                       CommonGradientButton(
                         customWidth: double.infinity,
-                        contentButton: "Add",
+                        contentButton: widget.action == NewAccountActionEnum.add
+                    ? "Add"
+                    : "Update",
                         onTap: () {
                           context.goNamed(AppRouters.signUpSuccessRoute);
                         },
@@ -247,11 +249,11 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
     return SafeArea(
       bottom: false,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 6.h),
+        padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 10.w),
         child: Row(
           children: [
             GestureDetector(
-              onTap: () => context.goNamed(AppRouters.setUpAccountIntroRoute),
+              onTap: () => context.pop(),
               child: Icon(
                 Icons.arrow_back_ios_rounded,
                 color: AppColors.textColor1,
@@ -259,7 +261,9 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
             ),
             Expanded(
               child: Text(
-                "Add new wallet",
+                widget.action == NewAccountActionEnum.add
+                    ? "Add new wallet"
+                    : "Edit account",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.textColor1,
@@ -268,7 +272,12 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-            )
+            ),
+            if (widget.action == NewAccountActionEnum.edit)
+              Icon(
+                Icons.delete_outline_rounded,
+                color: AppColors.textColor1,
+              )
           ],
         ),
       ),

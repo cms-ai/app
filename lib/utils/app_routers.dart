@@ -10,9 +10,12 @@ class AppRouters {
   static const String authRoute = "auth";
   static const String setUpAccountIntroRoute = "setUpAccountIntroRoute";
   static const String newAccountBankRoute = "newAccountBankRoute";
+  static const String newAccountBankProfileRoute = "newAccountBankProfileRoute";
   static const String signUpSuccessRoute = "signUpSuccessRoute";
   static const String dashBoardRoute = "dashBoardRoute";
   static const String transactionRoute = "transactionRoute";
+  static const String accountRoute = "accountRoute";
+  static const String accountDetailsRoute = "accountDetailsRoute";
 
   static String getRoutePath(String value) {
     return "/$value";
@@ -58,22 +61,23 @@ class Routers {
       builder: (BuildContext context, GoRouterState state) {
         return const SetupAccountIntro();
       },
-      routes: const <RouteBase>[],
-    ),
-    GoRoute(
-      name: AppRouters.newAccountBankRoute,
-      path: AppRouters.getRoutePath(AppRouters.newAccountBankRoute),
-      builder: (BuildContext context, GoRouterState state) {
-        return NewAccountBanksScreen(
-          action: NewAccountActionEnum.values
-              .where(
-                (element) =>
-                    element.name == state.uri.queryParameters["action"]!,
-              )
-              .first,
-        );
-      },
-      routes: const <RouteBase>[],
+      routes: <RouteBase>[
+        GoRoute(
+          name: AppRouters.newAccountBankRoute,
+          path: AppRouters.newAccountBankRoute,
+          builder: (BuildContext context, GoRouterState state) {
+            return NewAccountBanksScreen(
+              action: NewAccountActionEnum.values
+                  .where(
+                    (element) =>
+                        element.name == state.uri.queryParameters["action"]!,
+                  )
+                  .first,
+            );
+          },
+          routes: const <RouteBase>[],
+        ),
+      ],
     ),
     GoRoute(
       name: AppRouters.signUpSuccessRoute,
@@ -92,7 +96,7 @@ class Routers {
       routes: <RouteBase>[
         GoRoute(
           name: AppRouters.transactionRoute,
-          path:  AppRouters.transactionRoute,
+          path: AppRouters.transactionRoute,
           builder: (BuildContext context, GoRouterState state) {
             return TransactionScreen(
               actionType: TransactionActionEnum.values
@@ -103,6 +107,40 @@ class Routers {
                   .first,
             );
           },
+        ),
+        GoRoute(
+          name: AppRouters.accountRoute,
+          path: AppRouters.accountRoute,
+          builder: (BuildContext context, GoRouterState state) {
+            return const AccountScreen();
+          },
+          routes: <RouteBase>[
+            GoRoute(
+              name: AppRouters.accountDetailsRoute,
+              path: AppRouters.accountDetailsRoute,
+              builder: (BuildContext context, GoRouterState state) {
+                return AccountDetailsScreen();
+              },
+              routes: <RouteBase>[
+                GoRoute(
+                  name: AppRouters.newAccountBankProfileRoute,
+                  path: AppRouters.newAccountBankProfileRoute,
+                  builder: (BuildContext context, GoRouterState state) {
+                    return NewAccountBanksScreen(
+                      action: NewAccountActionEnum.values
+                          .where(
+                            (element) =>
+                                element.name ==
+                                state.uri.queryParameters["action"]!,
+                          )
+                          .first,
+                    );
+                  },
+                  routes: const <RouteBase>[],
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     ),

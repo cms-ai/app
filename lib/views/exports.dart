@@ -7,3 +7,5 @@ export 'new_account_bank/new_account_bank_screen.dart';
 export 'sign_up_success/sign_up_success_screen.dart';
 export 'dash_board/dash_board_screen.dart';
 export 'transaction/transaction_screen.dart';
+export 'account/account_screen.dart';
+export 'account_details/account_details_screen.dart';
