@@ -17,6 +17,9 @@ class $AssetsIconsGen {
   $AssetsIconsBottomNavBarGen get bottomNavBar =>
       const $AssetsIconsBottomNavBarGen();
 
+  /// File path: assets/icons/ic_account.svg
+  SvgGenImage get icAccount => const SvgGenImage('assets/icons/ic_account.svg');
+
   /// File path: assets/icons/ic_arrow_down.svg
   SvgGenImage get icArrowDown =>
       const SvgGenImage('assets/icons/ic_arrow_down.svg');
@@ -47,18 +50,29 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_jago.svg
   SvgGenImage get icJago => const SvgGenImage('assets/icons/ic_jago.svg');
 
+  /// File path: assets/icons/ic_logout.svg
+  SvgGenImage get icLogout => const SvgGenImage('assets/icons/ic_logout.svg');
+
   /// File path: assets/icons/ic_mandiri.svg
   SvgGenImage get icMandiri => const SvgGenImage('assets/icons/ic_mandiri.svg');
+
+  /// File path: assets/icons/ic_settings.svg
+  SvgGenImage get icSettings =>
+      const SvgGenImage('assets/icons/ic_settings.svg');
 
   /// File path: assets/icons/ic_sign_up_success.svg
   SvgGenImage get icSignUpSuccess =>
       const SvgGenImage('assets/icons/ic_sign_up_success.svg');
+
+  /// File path: assets/icons/ic_upload.svg
+  SvgGenImage get icUpload => const SvgGenImage('assets/icons/ic_upload.svg');
 
   /// File path: assets/icons/paypal.svg
   SvgGenImage get paypal => const SvgGenImage('assets/icons/paypal.svg');
 
   /// List of all assets
   List<SvgGenImage> get values => [
+        icAccount,
         icArrowDown,
         icBankAmerica,
         icBca,
@@ -68,8 +82,11 @@ class $AssetsIconsGen {
         icExpense,
         icIncome,
         icJago,
+        icLogout,
         icMandiri,
+        icSettings,
         icSignUpSuccess,
+        icUpload,
         paypal
       ];
 }

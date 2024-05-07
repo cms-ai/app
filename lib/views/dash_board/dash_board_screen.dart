@@ -69,7 +69,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             child: const SafeArea(
               bottom: false,
               child: IndexedStack(
-                index: 2,
+                index: 3,
                 children: [
                   HomeScreen(),
                   TransitionBodyScreen(),
