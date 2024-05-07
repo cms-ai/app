@@ -4,6 +4,7 @@ import 'package:app/utils/utils.dart';
 import 'package:app/views/common_views/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class BudgetScreen extends StatefulWidget {
   const BudgetScreen({super.key});
@@ -50,6 +51,9 @@ class _BudgetScreenState extends State<BudgetScreen> {
                         return _buildBudgetItem(
                           currentValue: 1000,
                           maxValue: 1200,
+                          onTap: () {
+                            context.goNamed(AppRouters.budgetDetailsRoute);
+                          }
                         );
                       },
                       separatorBuilder: (context, index) {
@@ -78,120 +82,124 @@ class _BudgetScreenState extends State<BudgetScreen> {
   Widget _buildBudgetItem({
     required int currentValue,
     required maxValue,
+    required Function onTap,
   }) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          border: Border.all(
-            color: AppColors.textColor2,
-          ),
-          borderRadius: BorderRadius.circular(10.r)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                    color: AppColors.textColor2.withOpacity(.3),
-                    border: Border.all(
-                      color: AppColors.textColor2.withOpacity(.5),
-                    ),
-                    borderRadius: BorderRadius.circular(20.r)),
-                child: Row(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                height: 14.h,
-                                width: 14.h,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFFCAC12),
-                                  shape: BoxShape.circle,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 4.h),
-                        Text(
-                          "Shopping",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.textColor1,
-                            fontFamily: FontFamily.poppins,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              Assets.icons.icBugdetLimit.svg()
-            ],
-          ),
-          SizedBox(height: 10.h),
-          Text(
-            r"Remaining $0",
-            style: TextStyle(
-              fontSize: 20.sp,
-              color: AppColors.textColor1,
-              fontFamily: FontFamily.dMSans,
-              fontWeight: FontWeight.w600,
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColors.textColor2,
             ),
-          ),
-          SizedBox(height: 10.h),
-          Stack(
-            children: [
-              Container(
-                height: 10,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Color(0xFFF1F1FA).withOpacity(.2),
-                    borderRadius: BorderRadius.circular(10.r)),
+            borderRadius: BorderRadius.circular(10.r)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                  decoration: BoxDecoration(
+                      color: AppColors.textColor2.withOpacity(.3),
+                      border: Border.all(
+                        color: AppColors.textColor2.withOpacity(.5),
+                      ),
+                      borderRadius: BorderRadius.circular(20.r)),
+                  child: Row(
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  height: 14.h,
+                                  width: 14.h,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFFCAC12),
+                                    shape: BoxShape.circle,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 4.h),
+                          Text(
+                            "Shopping",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: AppColors.textColor1,
+                              fontFamily: FontFamily.poppins,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                Assets.icons.icBugdetLimit.svg()
+              ],
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              r"Remaining $0",
+              style: TextStyle(
+                fontSize: 20.sp,
+                color: AppColors.textColor1,
+                fontFamily: FontFamily.dMSans,
+                fontWeight: FontWeight.w600,
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 20,
-                bottom: 0,
-                child: Container(
+            ),
+            SizedBox(height: 10.h),
+            Stack(
+              children: [
+                Container(
+                  height: 10,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: AppColors.textColor2,
+                      color: Color(0xFFF1F1FA).withOpacity(.2),
                       borderRadius: BorderRadius.circular(10.r)),
                 ),
-              )
-            ],
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            r"$1200 of $1000",
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: AppColors.textColor1.withOpacity(.5),
-              fontFamily: FontFamily.dMSans,
-              fontWeight: FontWeight.w500,
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 20,
+                  bottom: 0,
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: AppColors.textColor2,
+                        borderRadius: BorderRadius.circular(10.r)),
+                  ),
+                )
+              ],
             ),
-          ),
-          Text(
-            r"You’ve exceed the limit!",
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: AppColors.primaryColor2,
-              fontFamily: FontFamily.dMSans,
+            SizedBox(height: 4.h),
+            Text(
+              r"$1200 of $1000",
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: AppColors.textColor1.withOpacity(.5),
+                fontFamily: FontFamily.dMSans,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-        ],
+            Text(
+              r"You’ve exceed the limit!",
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: AppColors.primaryColor2,
+                fontFamily: FontFamily.dMSans,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
