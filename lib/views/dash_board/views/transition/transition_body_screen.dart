@@ -4,6 +4,7 @@ import 'package:app/views/common_views/exports.dart';
 import 'package:app/views/dash_board/views/transition/views/filter_body_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class TransitionBodyScreen extends StatefulWidget {
   const TransitionBodyScreen({super.key});
@@ -22,7 +23,7 @@ class _TransitionBodyScreenState extends State<TransitionBodyScreen> {
           _buildAppBar(context),
           GestureDetector(
             onTap: () {
-              // TODO: navigate to finalcial report
+              context.goNamed(AppRouters.financialReportRoute);
             },
             child: Container(
               width: double.infinity,

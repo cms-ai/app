@@ -11,3 +11,4 @@ export 'account/account_screen.dart';
 export 'account_details/account_details_screen.dart';
 export 'budget_details/budget_details_screen.dart';
 export 'bugdet/budget_screen.dart';
+export 'financial_report/financial_report_screen.dart';

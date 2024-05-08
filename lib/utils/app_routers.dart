@@ -21,6 +21,7 @@ class AppRouters {
   static const String budgetDetailsRoute = "budgetDetailsRoute";
   static const String budgetRoute = "budgetRoute";
   static const String transactionDetailRoute = "transactionDetailRoute";
+  static const String financialReportRoute = "financialReportRoute";
 
   static String getRoutePath(String value) {
     return "/$value";
@@ -100,6 +101,39 @@ class Routers {
       },
       routes: <RouteBase>[
         GoRoute(
+          name: AppRouters.transactionDetailRoute,
+          path: AppRouters.transactionDetailRoute,
+          builder: (BuildContext context, GoRouterState state) {
+            return const TransactionDetailsScreen();
+          },
+          routes: <RouteBase>[
+            GoRoute(
+              name: AppRouters.editTransactionRoute,
+              path: AppRouters.editTransactionRoute,
+              builder: (BuildContext context, GoRouterState state) {
+                return TransactionScreen(
+                  actionType: TransactionActionEnum.values
+                      .where(
+                        (element) =>
+                            element.name ==
+                            state.uri.queryParameters["action"]!,
+                      )
+                      .first,
+                );
+              },
+              routes: const [],
+            ),
+          ],
+        ),
+        GoRoute(
+          name: AppRouters.financialReportRoute,
+          path: AppRouters.financialReportRoute,
+          builder: (BuildContext context, GoRouterState state) {
+            return const FinancialReportScreen();
+          },
+          routes: const <RouteBase>[],
+        ),
+        GoRoute(
           name: AppRouters.budgetRoute,
           path: AppRouters.budgetRoute,
           builder: (BuildContext context, GoRouterState state) {
@@ -111,42 +145,17 @@ class Routers {
           name: AppRouters.transactionRoute,
           path: AppRouters.transactionRoute,
           builder: (BuildContext context, GoRouterState state) {
+            final String? value = state.uri.queryParameters["action"] ??
+                TransactionActionEnum.add.name;
             return TransactionScreen(
               actionType: TransactionActionEnum.values
                   .where(
-                    (element) =>
-                        element.name == state.uri.queryParameters["action"]!,
+                    (element) => element.name == value,
                   )
                   .first,
             );
           },
-          routes: [
-            GoRoute(
-              name: AppRouters.transactionDetailRoute,
-              path: AppRouters.transactionDetailRoute,
-              builder: (BuildContext context, GoRouterState state) {
-                return const TransactionDetailsScreen();
-              },
-              routes: <RouteBase>[
-                GoRoute(
-                  name: AppRouters.editTransactionRoute,
-                  path: AppRouters.editTransactionRoute,
-                  builder: (BuildContext context, GoRouterState state) {
-                    return TransactionScreen(
-                      actionType: TransactionActionEnum.values
-                          .where(
-                            (element) =>
-                                element.name ==
-                                state.uri.queryParameters["action"]!,
-                          )
-                          .first,
-                    );
-                  },
-                  routes: [],
-                ),
-              ],
-            ),
-          ],
+          routes: [],
         ),
         GoRoute(
           name: AppRouters.budgetDetailsRoute,
