@@ -1,6 +1,8 @@
 import 'package:app/gen/assets.gen.dart';
 import 'package:app/gen/fonts.gen.dart';
 import 'package:app/utils/utils.dart';
+import 'package:app/views/common_views/exports.dart';
+import 'package:app/views/dash_board/views/profile/views/exports.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,14 +89,24 @@ class ProfileScreen extends StatelessWidget {
                 //     onTap: () {}),
                 SizedBox(height: 20.h),
                 _buildOtion(
-                    content: "Delete account",
-                    iconWidget: Assets.icons.icUpload.svg(),
-                    onTap: () {}),
+                  content: "Delete account",
+                  iconWidget: Assets.icons.icUpload.svg(),
+                  onTap: () {
+                     CommonButtonSheet(
+                      customChild: DeleteAccountWidget(),
+                    ).show(context);
+                  },
+                ),
                 SizedBox(height: 20.h),
                 _buildOtion(
-                    content: "Logout",
-                    iconWidget: Assets.icons.icLogout.svg(),
-                    onTap: () {}),
+                  content: "Logout",
+                  iconWidget: Assets.icons.icLogout.svg(),
+                  onTap: () {
+                    CommonButtonSheet(
+                      customChild: LogOutBottomSheet(),
+                    ).show(context);
+                  },
+                ),
               ],
             ),
           )

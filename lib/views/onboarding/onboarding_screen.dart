@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:app/gen/assets.gen.dart';
 import 'package:app/gen/fonts.gen.dart';
 import 'package:flutter/material.dart';
@@ -12,17 +11,28 @@ class OnBoardingScreen extends StatefulWidget {
 
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
-  
 }
 
-class _OnBoardingScreenState extends State<OnBoardingScreen> {
+class _OnBoardingScreenState extends State<OnBoardingScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController controller;
+  late Animation<double> animation;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () => {
-      context.goNamed(AppRouters.introRoute)
-    });
+    controller =
+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    animation = Tween<double>(begin: 0, end: 300).animate(controller)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          // Navigate intro route
+          Future.delayed(const Duration(seconds: 1), () {
+            context.goNamed(AppRouters.introRoute);
+          });
+        }
+      });
+    controller.forward();
   }
 
   @override
@@ -61,21 +71,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
-                Assets.images.logoWithImage1.image(),
-                Text(
-                  "Your expense tracker. Peronified",
-                  style: TextStyle(
-                    fontFamily: FontFamily.poppins,
-                    fontSize: 12.sp,
-                    color: AppColors.textColor1.withOpacity(.4),
-                  ),
-                ),
+                AnimatedBuilder(
+                    animation: animation,
+                    builder: (context, child) {
+                      return Assets.images.logoWithImage1.image(
+                        height: animation.value,
+                      );
+                    }),
                 const Spacer(),
                 Text(
                   "Author: @tcaidev",
                   style: TextStyle(
                     fontFamily: FontFamily.poppins,
-                    fontSize: 8.sp,
+                    fontSize: 10.sp,
                     color: AppColors.textColor1.withOpacity(.2),
                   ),
                 ),

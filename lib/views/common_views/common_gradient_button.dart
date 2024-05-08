@@ -7,11 +7,13 @@ class CommonGradientButton extends StatelessWidget {
   final String contentButton;
   final double? customWidth;
   final Function()? onTap;
+  final Color? customColor;
   const CommonGradientButton({
     super.key,
     required this.contentButton,
     this.onTap,
     this.customWidth,
+    this.customColor,
   });
 
   @override
@@ -22,12 +24,15 @@ class CommonGradientButton extends StatelessWidget {
         width: customWidth,
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color(0xFFE3823C),
-              Color(0xFFE33C3C),
-            ],
-          ),
+          gradient: customColor == null
+              ? const LinearGradient(
+                  colors: [
+                    Color(0xFFE3823C),
+                    Color(0xFFE33C3C),
+                  ],
+                )
+              : null,
+          color: customColor,
           border: Border.all(color: const Color(0xFFFFFFFF).withOpacity(.5)),
           borderRadius: BorderRadius.circular(15.r),
         ),
@@ -35,11 +40,10 @@ class CommonGradientButton extends StatelessWidget {
           contentButton,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: FontFamily.dMSans,
-            fontSize: 13.sp,
-            color: AppColors.textColor1.withOpacity(.87),
-            fontWeight: FontWeight.w700
-          ),
+              fontFamily: FontFamily.dMSans,
+              fontSize: 13.sp,
+              color: AppColors.textColor1.withOpacity(.87),
+              fontWeight: FontWeight.w700),
         ),
       ),
     );

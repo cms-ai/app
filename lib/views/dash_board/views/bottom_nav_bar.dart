@@ -44,10 +44,12 @@ class BottomNavBar extends ConsumerWidget {
                           ref.read(navBarProvider.notifier).state =
                               BottomNavBarEnum.values.indexOf(value);
                         } else {
-                          context.goNamed(AppRouters.transactionRoute,
-                              queryParameters: {
-                                "action": TransactionActionEnum.add.name,
-                              });
+                          context.goNamed(
+                            AppRouters.transactionRoute,
+                            queryParameters: {
+                              "action": TransactionActionEnum.add.name,
+                            },
+                          );
                         }
                       }),
                     )
