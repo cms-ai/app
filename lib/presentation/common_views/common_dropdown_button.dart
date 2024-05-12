@@ -55,9 +55,8 @@ class _CommonDropdownButtonState extends State<CommonDropdownButton> {
           items: items
               .map((String item) => DropdownMenuItem<String>(
                     value: item,
-                    child: Container(
+                    child: SizedBox(
                       width: double.infinity,
-                      // margin:  EdgeInsets.symmetric(horizontal: 14.w),
                       child: Text(
                         item,
                         style: const TextStyle(

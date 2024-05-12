@@ -121,53 +121,6 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
     );
   }
 
-  Widget _buildOtion({
-    required Function onTap,
-    required String content,
-    required Widget iconWidget,
-  }) {
-    return GestureDetector(
-      onTap: () => onTap(),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Row(
-          children: [
-            Container(
-              height: 52,
-              width: 52,
-              padding: EdgeInsets.all(10.h),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.r),
-                color: AppColors.textColor1.withOpacity(.8),
-              ),
-              child: iconWidget,
-            ),
-            SizedBox(width: 20.w),
-            Expanded(
-              child: Text(
-                content,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontFamily: FontFamily.poppins,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textColor1,
-                ),
-              ),
-            ),
-            Text(
-              r"$400",
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontFamily: FontFamily.poppins,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textColor1,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _buildAppBar(BuildContext context) {
     return SafeArea(

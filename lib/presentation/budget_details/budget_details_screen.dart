@@ -1,11 +1,9 @@
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/exports.dart';
-import 'package:app/presentation/new_account_bank/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class BudgetDetailsScreen extends StatefulWidget {
@@ -80,7 +78,7 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                       Container(
                         width: 32.h,
                         height: 32.h,
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(10.h),
                         decoration: BoxDecoration(
                           color: AppColors.textColor2,
                           borderRadius: BorderRadius.circular(10.r),
@@ -158,6 +156,7 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Assets.icons.icBugdetLimit
+                          // ignore: deprecated_member_use_from_same_package
                           .svg(color: AppColors.textColor1),
                       SizedBox(width: 10.w),
                       Text(

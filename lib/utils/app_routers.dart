@@ -147,7 +147,7 @@ class Routers {
           name: AppRouters.budgetRoute,
           path: AppRouters.budgetRoute,
           builder: (BuildContext context, GoRouterState state) {
-            return BudgetScreen();
+            return const BudgetScreen();
           },
           routes: const <RouteBase>[],
         ),

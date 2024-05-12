@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class UserModel extends Equatable {
@@ -8,6 +7,7 @@ class UserModel extends Equatable {
   final int? createdAt;
   final int? updatedAt;
   final String? displayName;
+  final bool? isNewUser;
   const UserModel({
     this.userId = "",
     this.email = "",
@@ -15,6 +15,7 @@ class UserModel extends Equatable {
     this.createdAt,
     this.updatedAt,
     this.displayName,
+    this.isNewUser,
   });
   @override
   List<Object?> get props =>
@@ -27,6 +28,7 @@ class UserModel extends Equatable {
     int? createdAt,
     int? updatedAt,
     String? displayName,
+    bool? isNewUser,
   }) {
     return copyWith(
       userId: userId ?? this.userId,
@@ -35,6 +37,7 @@ class UserModel extends Equatable {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       displayName: displayName ?? this.displayName,
+      isNewUser: isNewUser ?? this.isNewUser,
     );
   }
 
@@ -48,6 +51,7 @@ class UserModel extends Equatable {
       createdAt: json["createdAt"],
       updatedAt: json["updatedAt"],
       displayName: json["displayName"],
+      isNewUser: json["isNewUser"],
     );
   }
 
@@ -61,6 +65,7 @@ class UserModel extends Equatable {
       if (createdAt != null) "createdAt": createdAt,
       if (updatedAt != null) "updatedAt": updatedAt,
       if (displayName != null) "displayName": displayName,
+      if (isNewUser != null) "isNewUser": isNewUser,
     };
   }
 }

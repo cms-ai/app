@@ -2,10 +2,8 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/common_views/exports.dart';
-import 'package:app/presentation/dash_board/views/home/views/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 

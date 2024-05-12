@@ -1,6 +1,7 @@
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/exports.dart';
 import 'package:app/presentation/new_account_bank/enums.dart';
+import 'package:app/utils/enums/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
@@ -157,8 +158,8 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
                       CommonGradientButton(
                         customWidth: double.infinity,
                         contentButton: widget.action == NewAccountActionEnum.add
-                    ? "Add"
-                    : "Update",
+                            ? "Add"
+                            : "Update",
                         onTap: () {
                           context.goNamed(AppRouters.signUpSuccessRoute);
                         },
@@ -178,35 +179,35 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
   }
 
   Widget _buildAccountBankList() {
-    List<Map<String, dynamic>> imageList = [
-      {
-        "name": "bank",
-        "image_path": Assets.icons.icBankAmerica.path,
-      },
-      {
-        "name": "bca",
-        "image_path": Assets.icons.icBca.path,
-      },
-      {
-        "name": "chase",
-        "image_path": Assets.icons.icChase.path,
-      },
-      {
-        "name": "citi",
-        "image_path": Assets.icons.icCiti.path,
-      },
-      {
-        "name": "mandiri",
-        "image_path": Assets.icons.icMandiri.path,
-      },
-      {
-        "name": "paypal",
-        "image_path": Assets.icons.paypal.path,
-      },
-      {"name": "none", "image_path": ""},
-    ];
+    // List<Map<String, dynamic>> imageList = [
+    //   {
+    //     "name": "bank",
+    //     "image_path": Assets.icons.icBankAmerica.path,
+    //   },
+    //   {
+    //     "name": "bca",
+    //     "image_path": Assets.icons.icBca.path,
+    //   },
+    //   {
+    //     "name": "chase",
+    //     "image_path": Assets.icons.icChase.path,
+    //   },
+    //   {
+    //     "name": "citi",
+    //     "image_path": Assets.icons.icCiti.path,
+    //   },
+    //   {
+    //     "name": "mandiri",
+    //     "image_path": Assets.icons.icMandiri.path,
+    //   },
+    //   {
+    //     "name": "paypal",
+    //     "image_path": Assets.icons.paypal.path,
+    //   },
+    //   {"name": "none", "image_path": ""},
+    // ];
     return GridView.builder(
-      itemCount: imageList.length,
+      itemCount: AccoutBankTypeEnum.values.length,
       padding: const EdgeInsets.all(0),
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -223,22 +224,16 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
                 color: AppColors.primaryColor,
               ),
               borderRadius: BorderRadius.circular(8.r)),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 6.h),
           child: Center(
-            child: index == imageList.length - 1
-                ? Text(
-                    "Other",
-                    style: TextStyle(
-                      color: AppColors.primaryColor5,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                : SvgPicture.asset(
-                    imageList[index]["image_path"],
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.contain,
+            child: AccoutBankTypeEnum.values[index].getIcon() ??
+                Text(
+                  "Other",
+                  style: TextStyle(
+                    color: AppColors.primaryColor5,
+                    fontWeight: FontWeight.w500,
                   ),
+                ),
           ),
         );
       },

@@ -82,9 +82,15 @@ class _SetupAccountIntroState extends State<SetupAccountIntro> {
                     customWidth: double.infinity,
                     contentButton: "Let's go",
                     onTap: () {
-                      context.goNamed(AppRouters.newAccountBankRoute, queryParameters: {"action": NewAccountActionEnum.add.name});
+                      context.goNamed(
+                        AppRouters.newAccountBankRoute,
+                        queryParameters: {
+                          "action": NewAccountActionEnum.add.name
+                        },
+                      );
                     },
                   ),
+                  SizedBox(height: 16.h)
                 ],
               ),
             ),

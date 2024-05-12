@@ -1,19 +1,27 @@
-import 'package:app/data/respositories/firebase_repository.dart';
-import 'package:app/data/respositories/repositories.dart';
 import 'package:app/presentation/auth/views/exports.dart';
+import 'package:app/providers/auth_provider.dart';
+import 'package:app/utils/enums/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
-class AuthScreen extends StatefulWidget {
+class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenState extends ConsumerState<AuthScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -21,8 +29,33 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(authStateScreenProvider, (previous, next) {
+      if (previous != next) {
+        switch (next) {
+          case AuthStateScreenEnum.loading:
+            EasyLoading.show(status: 'loading...');
+            break;
+          case AuthStateScreenEnum.success:
+            EasyLoading.showSuccess("Đăng nhập thành công");
+            ref.read(authStateScreenProvider.notifier).state =
+                AuthStateScreenEnum.initial;
+
+            // print("=== ${ref.read(userProvider.notifier).state?.isNewUser}");
+            if (ref.read(userProvider.notifier).state?.isNewUser == true) {
+              context.goNamed(AppRouters.setUpAccountIntroRoute);
+            } else {
+              context.goNamed(AppRouters.dashBoardRoute);
+            }
+            break;
+          case AuthStateScreenEnum.failure:
+            EasyLoading.showError("Đăng nhập thất bại. Xin vui lòng thử lại");
+            ref.read(authStateScreenProvider.notifier).state =
+                AuthStateScreenEnum.initial;
+          default:
+        }
+      }
+    });
     final size = MediaQuery.of(context).size;
-    final authRepo = AuthRepositoryImpl();
 
     return Scaffold(
       body: Stack(
@@ -53,12 +86,10 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
           LoginView(
-            onTap: () => {
-              authRepo.signInWithGoogle().then((bool? isNewAccount) {
-                if (isNewAccount == true) {
-                  print("Đăng nhập thành công");
-                }
-              })
+            onTap: () async {
+              await ref
+                  .read(authListNotifierProvider.notifier)
+                  .signInWithGoogle(ref);
             },
           ),
         ],

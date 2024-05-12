@@ -1,6 +1,5 @@
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/exports.dart';
-import 'package:app/presentation/new_account_bank/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
