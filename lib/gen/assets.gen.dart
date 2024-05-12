@@ -44,6 +44,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_expense.svg
   SvgGenImage get icExpense => const SvgGenImage('assets/icons/ic_expense.svg');
 
+  /// File path: assets/icons/ic_google.svg
+  SvgGenImage get icGoogle => const SvgGenImage('assets/icons/ic_google.svg');
+
   /// File path: assets/icons/ic_income.svg
   SvgGenImage get icIncome => const SvgGenImage('assets/icons/ic_income.svg');
 
@@ -80,6 +83,7 @@ class $AssetsIconsGen {
         icChase,
         icCiti,
         icExpense,
+        icGoogle,
         icIncome,
         icJago,
         icLogout,

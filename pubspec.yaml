@@ -47,6 +47,15 @@ dependencies:
   cached_network_image: ^3.3.1
   fl_chart: ^0.67.0
   dropdown_button2: ^2.3.9
+  shared_preferences: ^2.2.3
+  equatable: ^2.0.5
+  firebase_auth: ^4.19.5
+  firebase_core: ^2.31.0
+  logger: ^2.2.0
+  google_sign_in: ^6.2.1
+  cloud_firestore: ^4.17.3
+  uuid: ^4.4.0
+  hive: ^2.2.3
   # riverpod_generator: ^2.4.0
 
 dev_dependencies:

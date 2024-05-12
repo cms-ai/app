@@ -1,10 +1,17 @@
+import 'package:app/data/respositories/repositories.dart';
 import 'package:app/utils/utils.dart';
-import 'package:app/views/exports.dart';
+import 'package:app/presentation/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+Future<void> main() async {
+  // Repositiries
+  final firebaseRepo = FirebaseRepositoryApp();
+
+  // always call method [ensureInitialized] first
+  WidgetsFlutterBinding.ensureInitialized();
+  await firebaseRepo.initConfigProject();
   // Get current enviroment
   const String appFlavor = String.fromEnvironment('FLUTTER_APP_FLAVOR');
   final AppEnviroment currentEnv = AppEnviroment.values.firstWhere(

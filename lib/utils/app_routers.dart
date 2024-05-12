@@ -1,7 +1,7 @@
-import 'package:app/views/exports.dart';
-import 'package:app/views/new_account_bank/enums.dart';
-import 'package:app/views/transaction/enums.dart';
-import 'package:app/views/transaction_details/transaction_details_screen.dart';
+import 'package:app/presentation/exports.dart';
+import 'package:app/presentation/new_account_bank/enums.dart';
+import 'package:app/presentation/transaction/enums.dart';
+import 'package:app/presentation/transaction_details/transaction_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,6 +22,7 @@ class AppRouters {
   static const String budgetRoute = "budgetRoute";
   static const String transactionDetailRoute = "transactionDetailRoute";
   static const String financialReportRoute = "financialReportRoute";
+  static const String financialReportDetailRoute = "financialReportDetailRoute";
 
   static String getRoutePath(String value) {
     return "/$value";
@@ -131,7 +132,16 @@ class Routers {
           builder: (BuildContext context, GoRouterState state) {
             return const FinancialReportScreen();
           },
-          routes: const <RouteBase>[],
+          routes: <RouteBase>[
+            GoRoute(
+              name: AppRouters.financialReportDetailRoute,
+              path: AppRouters.financialReportDetailRoute,
+              builder: (BuildContext context, GoRouterState state) {
+                return const FinancialDetailScreen();
+              },
+              routes: const <RouteBase>[],
+            ),
+          ],
         ),
         GoRoute(
           name: AppRouters.budgetRoute,

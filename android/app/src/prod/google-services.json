@@ -12,7 +12,20 @@
           "package_name": "com.livskalla.app.dev"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "77172229043-p3modo1s8v1ku21nab8v78ul346j1pp0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.livskalla.app.dev",
+            "certificate_hash": "b19de8a0c9e2bdfda3c62c0bb02bab98e0bc3edd"
+          }
+        },
+        {
+          "client_id": "77172229043-8kugp2pjiigs4le5kh34etf985sfegmi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCNeqntvaLlwbl-kD9f-TWlcz_7S1g6UHc"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77172229043-8kugp2pjiigs4le5kh34etf985sfegmi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "77172229043-ton5nr22vvq3jitrrgi51s1ut3r3aot9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.livskalla.app.dev"
+              }
+            }
+          ]
         }
       }
     }
