@@ -155,7 +155,7 @@ class Routers {
           name: AppRouters.transactionRoute,
           path: AppRouters.transactionRoute,
           builder: (BuildContext context, GoRouterState state) {
-            final String? value = state.uri.queryParameters["action"] ??
+            final String value = state.uri.queryParameters["action"] ??
                 TransactionActionEnum.add.name;
             return TransactionScreen(
               actionType: TransactionActionEnum.values
@@ -165,7 +165,7 @@ class Routers {
                   .first,
             );
           },
-          routes: [],
+          routes: const [],
         ),
         GoRoute(
           name: AppRouters.budgetDetailsRoute,

@@ -110,9 +110,7 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
                     },
                   ),
                 ),
-                SizedBox(
-                  height: 16.h,
-                )
+                SizedBox(height: 16.h)
               ],
             ),
           )
@@ -120,7 +118,6 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
       ),
     );
   }
-
 
   Widget _buildAppBar(BuildContext context) {
     return SafeArea(

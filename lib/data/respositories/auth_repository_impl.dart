@@ -50,10 +50,11 @@ class AuthRepositoryImpl extends AuthRepository {
     // TODO: implement deleteUser
     throw UnimplementedError();
   }
-
+  
   @override
-  Future<void> getCurrentUser() {
-    // TODO: implement getCurrentUser
+  Future<Result<UserModel?, Exception>> getUser() {
+    // TODO: implement getUser
     throw UnimplementedError();
   }
+
 }

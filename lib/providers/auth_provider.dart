@@ -4,6 +4,7 @@ import 'package:app/data/respositories/repositories.dart';
 import 'package:app/domain/repositories/auth_repository.dart';
 import 'package:app/domain/usecases/exports.dart';
 import 'package:app/utils/enums/enums.dart';
+import 'package:app/utils/utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // auth screen page state provider
@@ -41,7 +42,8 @@ class AuthListNotifier extends StateNotifier<UserModel?> {
   AuthListNotifier(this._authenticateUser) : super(null);
 
   Future<void> signInWithGoogle(WidgetRef ref) async {
-    // change state -> loading 
+    final AppSharePreferences appSharePreferences = AppSharePreferences();
+    // change state -> loading
     ref.read(authStateScreenProvider.notifier).state =
         AuthStateScreenEnum.loading;
     final Result<UserModel?, Exception> result = await _authenticateUser.call();
@@ -52,6 +54,9 @@ class AuthListNotifier extends StateNotifier<UserModel?> {
           // login sucessfully
           ref.read(authStateScreenProvider.notifier).state =
               AuthStateScreenEnum.success;
+
+          // set local user id using for auto login
+          appSharePreferences.setUserId(userData.userId ?? "");
         } else {
           // login failed (deleted user, other)
           ref.read(authStateScreenProvider.notifier).state =

@@ -31,4 +31,30 @@ class TransactionModel extends Equatable {
         createdAt,
         updateAt,
       ];
+
+  factory TransactionModel.fromMap(data) {
+    return TransactionModel(
+      transactionId: data["transactionId"],
+      transactionType: data["transactionType"],
+      description: data["description"],
+      category: data["category"],
+      accountBankId: data["accountBankId"],
+      moneyValue: data["moneyValue"],
+      createdAt: data["createdAt"],
+      updateAt: data["updateAt"],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+     if(transactionId != null) "transactionId": transactionId,
+     if(transactionType != null) "transactionType": transactionType,
+     if(description != null) "description": description,
+     if(category != null) "category": category,
+     if(accountBankId != null) "accountBankId": accountBankId,
+     if(moneyValue != null) "moneyValue": moneyValue,
+     if(createdAt != null) "createdAt": createdAt,
+     if(updateAt != null) "updateAt": updateAt,
+    };
+  }
 }

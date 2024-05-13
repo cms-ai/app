@@ -24,12 +24,27 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     controller =
         AnimationController(duration: const Duration(seconds: 2), vsync: this);
     animation = Tween<double>(begin: 0, end: 300).animate(controller)
-      ..addStatusListener((status) {
+      ..addStatusListener((status) async {
+        final AppSharePreferences appSharePreferences = AppSharePreferences();
         if (status == AnimationStatus.completed) {
-          // Navigate intro route
-          Future.delayed(const Duration(seconds: 1), () {
-            context.goNamed(AppRouters.introRoute);
-          });
+          final userId = await appSharePreferences.getUserId();
+          final firstInitApp = await appSharePreferences.getFirstInitKey();
+
+          // is Loggined
+          if (userId != null && userId.isNotEmpty) {
+            Future.delayed(const Duration(seconds: 1), () {
+              context.goNamed(AppRouters.dashBoardRoute);
+            });
+          } else {
+            Future.delayed(const Duration(seconds: 1), () {
+              if (firstInitApp == true) {
+                appSharePreferences.setFirstInitKey(false);
+                context.goNamed(AppRouters.introRoute);
+              } else {
+                context.goNamed(AppRouters.authRoute);
+              }
+            });
+          }
         }
       });
     controller.forward();

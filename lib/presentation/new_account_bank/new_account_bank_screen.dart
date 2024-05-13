@@ -1,15 +1,17 @@
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/exports.dart';
 import 'package:app/presentation/new_account_bank/enums.dart';
+import 'package:app/providers/account_bank_provider.dart';
+import 'package:app/providers/exports.dart';
 import 'package:app/utils/enums/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-class NewAccountBanksScreen extends StatefulWidget {
+class NewAccountBanksScreen extends ConsumerWidget {
   const NewAccountBanksScreen({
     super.key,
     required this.action,
@@ -17,24 +19,8 @@ class NewAccountBanksScreen extends StatefulWidget {
   final NewAccountActionEnum action;
 
   @override
-  State<NewAccountBanksScreen> createState() => _NewAccountBanksScreenState();
-}
-
-class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Stack(
         children: [
@@ -157,7 +143,7 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
                       SizedBox(height: 40.h),
                       CommonGradientButton(
                         customWidth: double.infinity,
-                        contentButton: widget.action == NewAccountActionEnum.add
+                        contentButton: action == NewAccountActionEnum.add
                             ? "Add"
                             : "Update",
                         onTap: () {
@@ -224,7 +210,7 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
                 color: AppColors.primaryColor,
               ),
               borderRadius: BorderRadius.circular(8.r)),
-          padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 6.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
           child: Center(
             child: AccoutBankTypeEnum.values[index].getIcon() ??
                 Text(
@@ -256,7 +242,7 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
             ),
             Expanded(
               child: Text(
-                widget.action == NewAccountActionEnum.add
+                action == NewAccountActionEnum.add
                     ? "Add new wallet"
                     : "Edit account",
                 textAlign: TextAlign.center,
@@ -268,7 +254,7 @@ class _NewAccountBanksScreenState extends State<NewAccountBanksScreen> {
                 ),
               ),
             ),
-            if (widget.action == NewAccountActionEnum.edit)
+            if (action == NewAccountActionEnum.edit)
               Icon(
                 Icons.delete_outline_rounded,
                 color: AppColors.textColor1,
