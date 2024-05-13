@@ -1,19 +1,21 @@
 import 'dart:ui';
 import 'package:app/gen/assets.gen.dart';
 import 'package:app/gen/fonts.gen.dart';
+import 'package:app/providers/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class OnBoardingScreen extends StatefulWidget {
+class OnBoardingScreen extends ConsumerStatefulWidget {
   const OnBoardingScreen({super.key});
 
   @override
-  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+  ConsumerState<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
 
-class _OnBoardingScreenState extends State<OnBoardingScreen>
+class _OnBoardingScreenState extends ConsumerState<OnBoardingScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
   late Animation<double> animation;
@@ -32,8 +34,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
           // is Loggined
           if (userId != null && userId.isNotEmpty) {
+            // Get current user data
+            await ref
+                .read(authListNotifierProvider.notifier)
+                .getCurrentUser(ref, userId);
             Future.delayed(const Duration(seconds: 1), () {
-              context.goNamed(AppRouters.dashBoardRoute);
+              if (ref.read(userProvider.notifier).state?.isNewUser == true) {
+                // if is new user, navigate to [setUpAccountIntroRoute]
+                context.goNamed(AppRouters.setUpAccountIntroRoute);
+              } else {
+                // go to dashboard route
+                context.goNamed(AppRouters.dashBoardRoute);
+              }
             });
           } else {
             Future.delayed(const Duration(seconds: 1), () {

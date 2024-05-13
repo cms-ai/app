@@ -19,8 +19,10 @@ class AuthRepositoryImpl extends AuthRepository {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       UserModel? userOutput;
       if (googleUser != null) {
-        final user =
-            await userRef.where("email", isEqualTo: googleUser.email).get();
+        final user = await userRef
+            .where("email", isEqualTo: googleUser.email)
+            .limit(1)
+            .get();
         if (user.docs.isEmpty) {
           userOutput = UserModel(
             userId: _uuid.v1(),
@@ -50,11 +52,19 @@ class AuthRepositoryImpl extends AuthRepository {
     // TODO: implement deleteUser
     throw UnimplementedError();
   }
-  
-  @override
-  Future<Result<UserModel?, Exception>> getUser() {
-    // TODO: implement getUser
-    throw UnimplementedError();
-  }
 
+  @override
+  Future<Result<UserModel?, Exception>> getUser(String userId) async {
+    UserModel? outputUser;
+    try {
+      final user =
+          await userRef.where("userId", isEqualTo: userId).limit(1).get();
+      if (user.docs.isNotEmpty) {
+        outputUser = UserModel.fromMap(user.docs.first.data());
+      }
+      return Success(outputUser);
+    } on Exception catch (e) {
+      return Failure(e);
+    }
+  }
 }

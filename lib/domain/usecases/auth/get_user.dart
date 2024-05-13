@@ -7,6 +7,6 @@ class GetUser {
   GetUser(this.repository);
 
   Future<Result<UserModel?, Exception>> call(String userId) {
-    return repository.getUser();
+    return repository.getUser(userId);
   }
 }

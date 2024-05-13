@@ -27,19 +27,32 @@ final signInProvider = Provider<AuthenticateUser>((ref) {
   return AuthenticateUser(repository);
 });
 
+// getuserProvider
+final getUserProvider = Provider<GetUser>((ref) {
+  final repository = ref.read(authRepositoryProvider);
+  return GetUser(repository);
+});
 // auth list notifier provider
 final authListNotifierProvider =
     StateNotifierProvider<AuthListNotifier, UserModel?>((ref) {
   final authenticateUser = ref.read(signInProvider);
+  final getUser = ref.read(getUserProvider);
 
-  return AuthListNotifier(authenticateUser);
+  return AuthListNotifier(
+    authenticateUser,
+    getUser,
+  );
 });
 
 // Main Auth List Notifier
 class AuthListNotifier extends StateNotifier<UserModel?> {
   final AuthenticateUser _authenticateUser;
+  final GetUser _getUser;
 
-  AuthListNotifier(this._authenticateUser) : super(null);
+  AuthListNotifier(
+    this._authenticateUser,
+    this._getUser,
+  ) : super(null);
 
   Future<void> signInWithGoogle(WidgetRef ref) async {
     final AppSharePreferences appSharePreferences = AppSharePreferences();
@@ -67,6 +80,26 @@ class AuthListNotifier extends StateNotifier<UserModel?> {
         // server error
         ref.read(authStateScreenProvider.notifier).state =
             AuthStateScreenEnum.failure;
+        break;
+    }
+  }
+
+  Future<void> getCurrentUser(
+    WidgetRef ref,
+    String userId, {
+    Function? callBack,
+  }) async {
+    final result = await _getUser.call(userId);
+    switch (result) {
+      case Success(value: UserModel? userData):
+        if (userData != null && userData.isDeleted == false) {
+          ref.read(userProvider.notifier).state = userData;
+        }
+        break;
+      case Failure():
+        if (callBack != null) {
+          callBack();
+        }
         break;
     }
   }
