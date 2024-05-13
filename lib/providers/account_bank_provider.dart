@@ -1,17 +1,34 @@
 // auth repo provider
+import 'package:app/core/result.dart';
 import 'package:app/data/model/models.dart';
 import 'package:app/data/respositories/repositories.dart';
 import 'package:app/domain/usecases/exports.dart';
+import 'package:app/utils/enums/enums.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
+
+// auth screen page state provider
+final accountBankStateScreenProvider =
+    StateProvider<AccountBankStateScreenEnum>(
+  (ref) => AccountBankStateScreenEnum.initial,
+);
 
 final accountBankProvider = Provider<AccountBankRepositoryImpl>((ref) {
   return AccountBankRepositoryImpl();
 });
 
-final getAccountBankProvider = Provider<GetAccountBank>(
+// Get account list provider
+final getAccountBankListProvider = Provider<GetAccountBankList>(
   (ref) {
     final repository = ref.read(accountBankProvider);
-    return GetAccountBank(repository);
+    return GetAccountBankList(repository);
+  },
+);
+
+final addAccountBankProvider = Provider<AddAccountBank>(
+  (ref) {
+    final repository = ref.read(accountBankProvider);
+    return AddAccountBank(repository);
   },
 );
 
@@ -19,18 +36,58 @@ final getAccountBankProvider = Provider<GetAccountBank>(
 final accountBankListNotifierProvider =
     StateNotifierProvider<AccountBankListNotifier, List<TransactionModel>>(
         (ref) {
-  final getAccountBank = ref.read(getAccountBankProvider);
+  final getAccountBankList = ref.read(getAccountBankListProvider);
+  final addAccountBank = ref.read(addAccountBankProvider);
 
   return AccountBankListNotifier(
-    getAccountBank,
+    getAccountBankList,
+    addAccountBank,
   );
 });
 
 class AccountBankListNotifier extends StateNotifier<List<TransactionModel>> {
-  final GetAccountBank _getAccountBank;
-  AccountBankListNotifier(this._getAccountBank) : super([]);
+  final GetAccountBankList _getAccountBank;
+  final AddAccountBank _addAccountBank;
+  AccountBankListNotifier(
+    this._getAccountBank,
+    this._addAccountBank,
+  ) : super([]);
 
-  Future<void> getAccountBank(String userId) async {
+  Future<void> getAccountBankList(String userId) async {
     await _getAccountBank.call(userId);
+  }
+
+  Future<void> addAccountBank(
+    WidgetRef ref,
+    String userId,
+    String moneyValue,
+    String name,
+    String accountBankType,
+  ) async {
+    ref.read(accountBankStateScreenProvider.notifier).state =
+        AccountBankStateScreenEnum.loading;
+
+    final uuid = const Uuid().v1();
+    final result = await _addAccountBank.call(
+      userId,
+      AccountBankModel(
+        accountBankId: uuid,
+        category: accountBankType,
+        name: name,
+        moneyValue: int.parse(moneyValue),
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+      ),
+    );
+    switch (result) {
+      case Success():
+        ref.read(accountBankStateScreenProvider.notifier).state =
+            AccountBankStateScreenEnum.success;
+        break;
+      case Failure():
+        // server error
+        ref.read(accountBankStateScreenProvider.notifier).state =
+            AccountBankStateScreenEnum.failure;
+        break;
+    }
   }
 }

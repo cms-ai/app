@@ -1,22 +1,31 @@
+import 'package:app/data/model/models.dart';
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/exports.dart';
+import 'package:app/providers/exports.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SignUpSuccessScreen extends StatefulWidget {
+class SignUpSuccessScreen extends ConsumerStatefulWidget {
   const SignUpSuccessScreen({super.key});
 
   @override
-  State<SignUpSuccessScreen> createState() => _SignUpSuccessScreenState();
+  ConsumerState<SignUpSuccessScreen> createState() =>
+      _SignUpSuccessScreenState();
 }
 
-class _SignUpSuccessScreenState extends State<SignUpSuccessScreen> {
+class _SignUpSuccessScreenState extends ConsumerState<SignUpSuccessScreen> {
   @override
-  void dispose() {
-    super.dispose();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ref.read(authListNotifierProvider.notifier).updateUser(
+          ref.read(userProvider.notifier).state!.userId!,
+          data: const UserModel(isNewUser: false),
+        );
   }
 
   @override

@@ -67,4 +67,19 @@ class AuthRepositoryImpl extends AuthRepository {
       return Failure(e);
     }
   }
+
+  @override
+  Future<Result<UserModel?, Exception>> updateUser(
+    String userId,
+    UserModel? data,
+  ) async {
+    try {
+      await userRef
+          .doc(userId)
+          .update(const UserModel(isNewUser: false).toMap());
+      return const Success(null);
+    } on Exception catch (e) {
+      return Failure(e);
+    }
+  }
 }

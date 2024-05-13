@@ -5,15 +5,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
 class AccountBankRepositoryImpl extends AccountBankRepository {
-  final accountBankRef = FirebaseFirestore.instance.collection('accountBank');
+  final accountBankRef = FirebaseFirestore.instance.collection('accountBanks');
   final _uuid = const Uuid();
   @override
-  Future<Result<String?, Exception>> addAccountBank(
+  Future<Result<dynamic, Exception>> addAccountBank(
     String userId,
-    TransactionModel transactionModel,
+    AccountBankModel accountBankModel,
   ) async {
     try {
-      await accountBankRef.doc(_uuid.v1()).set(transactionModel.toMap());
+      await accountBankRef.doc(_uuid.v1()).set(accountBankModel.toMap());
       return const Success(null);
     } on Exception catch (e) {
       return Failure(e);

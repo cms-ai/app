@@ -1,6 +1,14 @@
 import 'package:app/gen/export.dart';
 import 'package:flutter/material.dart';
 
+// This enum using for auth_screen 
+enum AccountBankStateScreenEnum {
+  initial,
+  loading,
+  success,
+  failure;
+}
+
 enum AccoutBankTypeEnum {
   chase,
   paypal,
@@ -28,6 +36,25 @@ extension AccoutBankTypeEnumExt on AccoutBankTypeEnum {
         return Assets.icons.icBca.svg();
       default:
         return null;
+    }
+  }
+
+  String getString() {
+    switch (this) {
+      case AccoutBankTypeEnum.chase:
+        return "Chase";
+      case AccoutBankTypeEnum.paypal:
+        return "Paypal";
+      case AccoutBankTypeEnum.citi:
+        return "Citi";
+      case AccoutBankTypeEnum.bankOfAmerican:
+        return "Bank of American";
+      case AccoutBankTypeEnum.mandiri:
+        return "Mandiri";
+      case AccoutBankTypeEnum.bca:
+        return "BCA";
+      case AccoutBankTypeEnum.other:
+        return "Other";
     }
   }
 }

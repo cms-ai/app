@@ -1,17 +1,18 @@
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/exports.dart';
 import 'package:app/presentation/new_account_bank/enums.dart';
-import 'package:app/providers/account_bank_provider.dart';
 import 'package:app/providers/exports.dart';
 import 'package:app/utils/enums/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NewAccountBanksScreen extends ConsumerWidget {
+class NewAccountBanksScreen extends HookConsumerWidget {
   const NewAccountBanksScreen({
     super.key,
     required this.action,
@@ -20,6 +21,39 @@ class NewAccountBanksScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController nameController = TextEditingController();
+    ValueNotifier<AccoutBankTypeEnum> accountType =
+        useState(AccoutBankTypeEnum.chase);
+    ref.listen(
+      accountBankStateScreenProvider,
+      (previous, next) {
+        if (previous != next) {
+          switch (next) {
+            case AccountBankStateScreenEnum.loading:
+              EasyLoading.show(status: 'loading...');
+              break;
+            case AccountBankStateScreenEnum.success:
+              EasyLoading.showSuccess("Tạo thành công");
+              ref.read(accountBankStateScreenProvider.notifier).state =
+                  AccountBankStateScreenEnum.initial;
+              if (action == NewAccountActionEnum.add) {
+                context.goNamed(AppRouters.signUpSuccessRoute);
+              } else if ((action == NewAccountActionEnum.add)) {
+                // TODO: handle route edit
+                context.pop();
+              } else {
+                // TODO: handle route delete
+              }
+              break;
+            case AccountBankStateScreenEnum.failure:
+              EasyLoading.showError("Tạo thất bại. Xin vui lòng thử lại");
+              ref.read(accountBankStateScreenProvider.notifier).state =
+                  AccountBankStateScreenEnum.initial;
+            default:
+          }
+        }
+      },
+    );
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
@@ -123,23 +157,23 @@ class NewAccountBanksScreen extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CommonTextField(
+                        controller: nameController,
                         customMargin: const EdgeInsets.only(bottom: 14),
                         hintText: "Name",
                         textFieldStyle: TextFieldStyleEnum.border,
-                        onChanged: (value) {
-                          // TODO: on change username,
-                        },
                       ),
                       CommonTextField(
                         customMargin: const EdgeInsets.only(bottom: 14),
                         readOnly: true,
                         hintText: "Account Type",
+                        controller: TextEditingController(
+                            text: accountType.value.getString()),
                         textFieldStyle: TextFieldStyleEnum.border,
-                        onChanged: (value) {
-                          // TODO: on change username,
-                        },
                       ),
-                      _buildAccountBankList(),
+                      _buildAccountBankList(accountType.value,
+                          (AccoutBankTypeEnum value) {
+                        accountType.value = value;
+                      }),
                       SizedBox(height: 40.h),
                       CommonGradientButton(
                         customWidth: double.infinity,
@@ -147,7 +181,16 @@ class NewAccountBanksScreen extends ConsumerWidget {
                             ? "Add"
                             : "Update",
                         onTap: () {
-                          context.goNamed(AppRouters.signUpSuccessRoute);
+                          ref
+                              .read(accountBankListNotifierProvider.notifier)
+                              .addAccountBank(
+                                ref,
+                                ref.read(userProvider.notifier).state!.userId!,
+                                "0",
+                                nameController.text.trim(),
+                                accountType.value.name,
+                              );
+                          // context.goNamed(AppRouters.signUpSuccessRoute);
                         },
                       ),
                       SizedBox(
@@ -164,34 +207,10 @@ class NewAccountBanksScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildAccountBankList() {
-    // List<Map<String, dynamic>> imageList = [
-    //   {
-    //     "name": "bank",
-    //     "image_path": Assets.icons.icBankAmerica.path,
-    //   },
-    //   {
-    //     "name": "bca",
-    //     "image_path": Assets.icons.icBca.path,
-    //   },
-    //   {
-    //     "name": "chase",
-    //     "image_path": Assets.icons.icChase.path,
-    //   },
-    //   {
-    //     "name": "citi",
-    //     "image_path": Assets.icons.icCiti.path,
-    //   },
-    //   {
-    //     "name": "mandiri",
-    //     "image_path": Assets.icons.icMandiri.path,
-    //   },
-    //   {
-    //     "name": "paypal",
-    //     "image_path": Assets.icons.paypal.path,
-    //   },
-    //   {"name": "none", "image_path": ""},
-    // ];
+  Widget _buildAccountBankList(
+    AccoutBankTypeEnum currentValue,
+    Function onTap,
+  ) {
     return GridView.builder(
       itemCount: AccoutBankTypeEnum.values.length,
       padding: const EdgeInsets.all(0),
@@ -203,23 +222,28 @@ class NewAccountBanksScreen extends ConsumerWidget {
         mainAxisSpacing: 10,
       ),
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-          height: 80.h,
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: AppColors.primaryColor,
-              ),
-              borderRadius: BorderRadius.circular(8.r)),
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
-          child: Center(
-            child: AccoutBankTypeEnum.values[index].getIcon() ??
-                Text(
-                  "Other",
-                  style: TextStyle(
-                    color: AppColors.primaryColor5,
-                    fontWeight: FontWeight.w500,
-                  ),
+        return GestureDetector(
+          onTap: () => onTap(AccoutBankTypeEnum.values[index]),
+          child: Container(
+            height: 80.h,
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: AccoutBankTypeEnum.values[index] == currentValue
+                      ? AppColors.primaryColor
+                      : AppColors.primaryColor4,
                 ),
+                borderRadius: BorderRadius.circular(8.r)),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+            child: Center(
+              child: AccoutBankTypeEnum.values[index].getIcon() ??
+                  Text(
+                    "Other",
+                    style: TextStyle(
+                      color: AppColors.primaryColor5,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+            ),
           ),
         );
       },

@@ -32,15 +32,24 @@ final getUserProvider = Provider<GetUser>((ref) {
   final repository = ref.read(authRepositoryProvider);
   return GetUser(repository);
 });
+
+// getuserProvider
+final updateUserProvider = Provider<UpdateUser>((ref) {
+  final repository = ref.read(authRepositoryProvider);
+  return UpdateUser(repository);
+});
+
 // auth list notifier provider
 final authListNotifierProvider =
     StateNotifierProvider<AuthListNotifier, UserModel?>((ref) {
   final authenticateUser = ref.read(signInProvider);
   final getUser = ref.read(getUserProvider);
+  final updateUser = ref.read(updateUserProvider);
 
   return AuthListNotifier(
     authenticateUser,
     getUser,
+    updateUser,
   );
 });
 
@@ -48,10 +57,12 @@ final authListNotifierProvider =
 class AuthListNotifier extends StateNotifier<UserModel?> {
   final AuthenticateUser _authenticateUser;
   final GetUser _getUser;
+  final UpdateUser _updateUser;
 
   AuthListNotifier(
     this._authenticateUser,
     this._getUser,
+    this._updateUser,
   ) : super(null);
 
   Future<void> signInWithGoogle(WidgetRef ref) async {
@@ -102,5 +113,13 @@ class AuthListNotifier extends StateNotifier<UserModel?> {
         }
         break;
     }
+  }
+
+  Future<void> updateUser(
+    String userId, {
+    Function? callBack,
+    UserModel? data,
+  }) async {
+    await _updateUser.call(userId, data);
   }
 }
