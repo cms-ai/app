@@ -7,7 +7,7 @@ class GetAccountBankList {
 
   GetAccountBankList(this.repository);
 
-  Future<Result<List<TransactionModel>, Exception>> call(String userId) {
+  Future<Result<List<AccountBankModel>, Exception>> call(String userId) {
     return repository.getAccountBank(userId);
   }
 }

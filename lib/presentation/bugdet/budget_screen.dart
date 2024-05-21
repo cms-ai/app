@@ -1,5 +1,6 @@
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/exports.dart';
+import 'package:app/utils/enums/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
@@ -136,6 +137,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                       CommonDropdownButton(
                         customMargin: EdgeInsets.only(bottom: 14),
                         hintText: "Category",
+                        items: TransactionCategoryEnum.toStringList(),
                       ),
                       SizedBox(height: 20.h),
                       CommonGradientButton(

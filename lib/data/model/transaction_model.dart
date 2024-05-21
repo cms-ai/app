@@ -6,6 +6,7 @@ class TransactionModel extends Equatable {
   final String? description;
   final String? category;
   final String? accountBankId;
+  final String? userId;
   final int? moneyValue;
   final int? createdAt;
   final int? updateAt;
@@ -15,6 +16,7 @@ class TransactionModel extends Equatable {
     this.description,
     this.category,
     this.accountBankId,
+    this.userId,
     this.moneyValue,
     this.createdAt,
     this.updateAt,
@@ -27,34 +29,40 @@ class TransactionModel extends Equatable {
         description,
         category,
         accountBankId,
+        userId,
         moneyValue,
         createdAt,
         updateAt,
       ];
 
-  factory TransactionModel.fromMap(data) {
+  factory TransactionModel.fromMap(Map<String, dynamic> data) {
     return TransactionModel(
-      transactionId: data["transactionId"],
-      transactionType: data["transactionType"],
-      description: data["description"],
-      category: data["category"],
-      accountBankId: data["accountBankId"],
-      moneyValue: data["moneyValue"],
-      createdAt: data["createdAt"],
-      updateAt: data["updateAt"],
+      transactionId:
+          data.containsKey("transactionId") ? data["transactionId"] : null,
+      transactionType:
+          data.containsKey("transactionType") ? data["transactionType"] : null,
+      description: data.containsKey("description") ? data["description"] : null,
+      category: data.containsKey("category") ? data["category"] : null,
+      accountBankId:
+          data.containsKey("accountBankId") ? data["accountBankId"] : null,
+      userId: data.containsKey("userId") ? data["userId"] : null,
+      moneyValue: data.containsKey("moneyValue") ? data["moneyValue"] : null,
+      createdAt: data.containsKey("createdAt") ? data["createdAt"] : null,
+      updateAt: data.containsKey("updateAt") ? data["updateAt"] : null,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-     if(transactionId != null) "transactionId": transactionId,
-     if(transactionType != null) "transactionType": transactionType,
-     if(description != null) "description": description,
-     if(category != null) "category": category,
-     if(accountBankId != null) "accountBankId": accountBankId,
-     if(moneyValue != null) "moneyValue": moneyValue,
-     if(createdAt != null) "createdAt": createdAt,
-     if(updateAt != null) "updateAt": updateAt,
+      if (transactionId != null) "transactionId": transactionId,
+      if (transactionType != null) "transactionType": transactionType,
+      if (description != null) "description": description,
+      if (category != null) "category": category,
+      if (accountBankId != null) "accountBankId": accountBankId,
+      if (userId != null) "userId": userId,
+      if (moneyValue != null) "moneyValue": moneyValue,
+      if (createdAt != null) "createdAt": createdAt,
+      if (updateAt != null) "updateAt": updateAt,
     };
   }
 }

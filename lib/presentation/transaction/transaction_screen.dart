@@ -1,13 +1,20 @@
+import 'package:app/data/model/models.dart';
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/exports.dart';
 import 'package:app/presentation/transaction/enums.dart';
+import 'package:app/presentation/transaction/extenstion.dart';
+import 'package:app/providers/exports.dart';
+import 'package:app/utils/enums/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class TransactionScreen extends StatefulWidget {
+class TransactionScreen extends HookConsumerWidget {
   const TransactionScreen({
     super.key,
     required this.actionType,
@@ -15,25 +22,29 @@ class TransactionScreen extends StatefulWidget {
   final TransactionActionEnum actionType;
 
   @override
-  State<TransactionScreen> createState() => _TransactionScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Variables
+    final ValueNotifier<String> currentDes = useState("");
+    final ValueNotifier<int> currentMoneyValue = useState(0);
+    final ValueNotifier<TransactionCategoryEnum?> currentCate = useState(null);
+    final ValueNotifier<TransactionType?> currentTrans = useState(null);
+    final ValueNotifier<AccountBankModel?> currentAccountBank = useState(null);
+    // End Variables
 
-class _TransactionScreenState extends State<TransactionScreen> {
-  final TextEditingController controller = TextEditingController(text: "0,00");
-  @override
-  void initState() {
-    super.initState();
-  }
+    List<AccountBankModel> accountBankListNotifier =
+        ref.watch(accountBankListNotifierProvider);
+    final fetchData = useCallback(() async {
+      final String? userId = await AppSharePreferences().getUserId();
+      ref
+          .read(accountBankListNotifierProvider.notifier)
+          .getAccountBankList(ref, userId!);
+    });
+    useEffect(() {
+      fetchData();
+      return () {};
+    }, []);
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Stack(
         children: [
@@ -96,7 +107,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     ),
                     Expanded(
                       child: TextField(
-                        controller: controller,
                         style: TextStyle(
                           fontFamily: FontFamily.dMSans,
                           fontSize: 50.sp,
@@ -104,11 +114,22 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                         keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
+                          TextInputFormatter.withFunction((oldValue, newValue) {
+                            final text = newValue.text;
+                            return text.isEmpty
+                                ? newValue
+                                : double.tryParse(text) == null
+                                    ? oldValue
+                                    : newValue;
+                          }),
+                        ],
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.zero,
                           isDense: true,
-                          hintText: "",
+                          hintText: "0",
                           hintStyle: TextStyle(
                             fontFamily: FontFamily.dMSans,
                             fontSize: 50.sp,
@@ -116,14 +137,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          currentMoneyValue.value = int.tryParse(value) ?? 0;
+                        },
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: 20.h),
                 Container(
-                  // height: 200,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -137,40 +159,63 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CommonDropdownButton(
-                        customMargin: EdgeInsets.only(bottom: 14),
+                        customMargin: const EdgeInsets.only(bottom: 14),
                         hintText: "Category",
+                        items: TransactionCategoryEnum.toStringList(),
+                        onChange: (value, index) {
+                          currentCate.value =
+                              TransactionCategoryEnum.values[index];
+                        },
                       ),
                       CommonTextField(
                         customMargin: const EdgeInsets.only(bottom: 14),
                         hintText: "Description",
                         textFieldStyle: TextFieldStyleEnum.border,
                         onChanged: (value) {
-                          // TODO: on change username,
+                          currentDes.value = value;
                         },
                       ),
                       CommonDropdownButton(
-                        customMargin: EdgeInsets.only(bottom: 14),
+                        customMargin: const EdgeInsets.only(bottom: 14),
                         hintText: "Wallet",
+                        items: accountBankListNotifier
+                            .map((e) => e.name ?? "")
+                            .toList(),
+                        onChange: (value, index) {
+                          currentAccountBank.value =
+                              accountBankListNotifier[index];
+                        },
                       ),
                       CommonDropdownButton(
                         hintText: "Transaction Type",
+                        items: TransactionType.toStringList(),
+                        onChange: (p0, selectIndex) {
+                          currentTrans.value =
+                              TransactionType.values[selectIndex];
+                        },
                       ),
                       SizedBox(height: 40.h),
                       CommonGradientButton(
                         customWidth: double.infinity,
-                        contentButton: widget.actionType.getContentButton(),
+                        contentButton: actionType.getContentButton(),
                         onTap: () {
-                          context.goNamed(AppRouters.signUpSuccessRoute);
+                          handleAddTransaction(
+                            ref,
+                            context,
+                            moneyValue: currentMoneyValue.value,
+                            transactionType: currentTrans.value!.name,
+                            description: currentDes.value,
+                            accountBankId:
+                                currentAccountBank.value!.accountBankId!,
+                            category: currentCate.value!.name,
+                          );
                         },
                       ),
-                      SizedBox(
-                        height: 20.h,
-                      )
+                      SizedBox(height: 20.h)
                     ],
                   ),
                 ),
                 SizedBox(height: 20.h),
-                
               ],
             ),
           )

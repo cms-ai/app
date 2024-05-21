@@ -34,7 +34,7 @@ final addAccountBankProvider = Provider<AddAccountBank>(
 
 // auth list notifier provider
 final accountBankListNotifierProvider =
-    StateNotifierProvider<AccountBankListNotifier, List<TransactionModel>>(
+    StateNotifierProvider<AccountBankListNotifier, List<AccountBankModel>>(
         (ref) {
   final getAccountBankList = ref.read(getAccountBankListProvider);
   final addAccountBank = ref.read(addAccountBankProvider);
@@ -45,7 +45,7 @@ final accountBankListNotifierProvider =
   );
 });
 
-class AccountBankListNotifier extends StateNotifier<List<TransactionModel>> {
+class AccountBankListNotifier extends StateNotifier<List<AccountBankModel>> {
   final GetAccountBankList _getAccountBank;
   final AddAccountBank _addAccountBank;
   AccountBankListNotifier(
@@ -53,8 +53,14 @@ class AccountBankListNotifier extends StateNotifier<List<TransactionModel>> {
     this._addAccountBank,
   ) : super([]);
 
-  Future<void> getAccountBankList(String userId) async {
-    await _getAccountBank.call(userId);
+  Future<void> getAccountBankList(WidgetRef ref, String userId) async {
+    final result = await _getAccountBank.call(userId);
+    switch (result) {
+      case Success(value: List<AccountBankModel>? data):
+        state = [...data];
+        break;
+      default:
+    }
   }
 
   Future<void> addAccountBank(
@@ -73,6 +79,7 @@ class AccountBankListNotifier extends StateNotifier<List<TransactionModel>> {
       AccountBankModel(
         accountBankId: uuid,
         category: accountBankType,
+        userId: userId,
         name: name,
         moneyValue: int.parse(moneyValue),
         createdAt: DateTime.now().millisecondsSinceEpoch,

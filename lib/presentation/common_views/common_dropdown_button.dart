@@ -1,5 +1,4 @@
 import 'package:app/gen/export.dart';
-import 'package:app/utils/utils.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,25 +8,19 @@ class CommonDropdownButton extends StatefulWidget {
     super.key,
     this.hintText = "",
     this.customMargin,
+    required this.items,
+    this.onChange,
   });
   final String hintText;
   final EdgeInsetsGeometry? customMargin;
+  final List<String> items;
+  final Function(String?, int selectIndex)? onChange;
 
   @override
   State<CommonDropdownButton> createState() => _CommonDropdownButtonState();
 }
 
 class _CommonDropdownButtonState extends State<CommonDropdownButton> {
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
-  ];
   String? selectedValue;
   @override
   Widget build(BuildContext context) {
@@ -52,7 +45,7 @@ class _CommonDropdownButtonState extends State<CommonDropdownButton> {
               ),
             ],
           ),
-          items: items
+          items: widget.items
               .map((String item) => DropdownMenuItem<String>(
                     value: item,
                     child: SizedBox(
@@ -71,6 +64,9 @@ class _CommonDropdownButtonState extends State<CommonDropdownButton> {
               .toList(),
           value: selectedValue,
           onChanged: (String? value) {
+            final int indexSelected =
+                widget.items.indexWhere((element) => element == value);
+            if (widget.onChange != null) widget.onChange!(value, indexSelected);
             setState(() {
               selectedValue = value;
             });

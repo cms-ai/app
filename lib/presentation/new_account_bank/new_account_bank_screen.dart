@@ -21,9 +21,12 @@ class NewAccountBanksScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController nameController = TextEditingController();
     ValueNotifier<AccoutBankTypeEnum> accountType =
         useState(AccoutBankTypeEnum.chase);
+    ValueNotifier<String> currentName = useState("");
+    final TextEditingController nameController =
+        TextEditingController(text: currentName.value);
+
     ref.listen(
       accountBankStateScreenProvider,
       (previous, next) {
@@ -157,10 +160,12 @@ class NewAccountBanksScreen extends HookConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CommonTextField(
-                        controller: nameController,
                         customMargin: const EdgeInsets.only(bottom: 14),
                         hintText: "Name",
                         textFieldStyle: TextFieldStyleEnum.border,
+                        onChanged: (value) {
+                          currentName.value = value;
+                        },
                       ),
                       CommonTextField(
                         customMargin: const EdgeInsets.only(bottom: 14),

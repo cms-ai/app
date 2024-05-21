@@ -7,7 +7,7 @@ class AccountBankModel extends Equatable {
   final String? category;
   final int? moneyValue;
   final int? createdAt;
-  final int? updateAt;
+  final int? updatedAt;
 
   const AccountBankModel({
     this.accountBankId,
@@ -16,7 +16,7 @@ class AccountBankModel extends Equatable {
     this.category,
     this.moneyValue,
     this.createdAt,
-    this.updateAt,
+    this.updatedAt,
   });
   @override
   List<Object?> get props => [
@@ -26,18 +26,19 @@ class AccountBankModel extends Equatable {
         category,
         moneyValue,
         createdAt,
-        updateAt,
+        updatedAt,
       ];
 
-  factory AccountBankModel.fromMap(data) {
+  factory AccountBankModel.fromMap(Map<String, dynamic> data) {
     return AccountBankModel(
-      accountBankId: data["accountBankId"],
-      name: data["name"],
-      userId: data["userId"],
-      category: data["category"],
-      moneyValue: data["moneyValue"],
-      createdAt: data["createdAt"],
-      updateAt: data["updateAt"],
+      accountBankId:
+          data.containsKey("accountBankId") ? data["accountBankId"] : null,
+      name: data.containsKey("name") ? data["name"] : null,
+      userId: data.containsKey("userId") ? data["userId"] : null,
+      category: data.containsKey("category") ? data["category"] : null,
+      moneyValue: data.containsKey("moneyValue") ? data["moneyValue"] : null,
+      createdAt: data.containsKey("createdAt") ? data["createdAt"] : null,
+      updatedAt: data.containsKey("updatedAt") ? data["updatedAt"] : null,
     );
   }
   Map<String, dynamic> toMap() {
@@ -49,7 +50,11 @@ class AccountBankModel extends Equatable {
       if (moneyValue != null) "moneyValue": moneyValue,
       if (moneyValue != null) "moneyValue": moneyValue,
       if (createdAt != null) "createdAt": createdAt,
-      if (updateAt != null) "updateAt": updateAt,
+      if (updatedAt != null) "updatedAt": updatedAt,
     };
+  }
+
+  List<String> getAccountBankTitleList(List<AccountBankModel> data) {
+    return data.map((e) => e.name ?? "").toList();
   }
 }
