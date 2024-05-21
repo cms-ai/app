@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:app/data/model/models.dart';
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/common_views/exports.dart';
 import 'package:flutter/material.dart';
@@ -164,7 +165,8 @@ class FinancialDetailScreen extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 10.h),
                                   decoration: BoxDecoration(
                                       color: AppColors.textColor2,
-                                      borderRadius: BorderRadius.circular(50.r)),
+                                      borderRadius:
+                                          BorderRadius.circular(50.r)),
                                   child: Text(
                                     "Expense",
                                     textAlign: TextAlign.center,
@@ -181,12 +183,14 @@ class FinancialDetailScreen extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 10.h),
                                   decoration: BoxDecoration(
                                       color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(50.r)),
+                                      borderRadius:
+                                          BorderRadius.circular(50.r)),
                                   child: Text(
                                     "Income",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: AppColors.textColor1.withOpacity(.3),
+                                      color:
+                                          AppColors.textColor1.withOpacity(.3),
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -235,7 +239,9 @@ class FinancialDetailScreen extends StatelessWidget {
                             // physics: NeverScrollableScrollPhysics(),
                             itemCount: 6,
                             itemBuilder: (context, index) {
-                              return CommonTransactionItem();
+                              return CommonTransactionItem(
+                                data: TransactionModel(),
+                              );
                             },
                             separatorBuilder: (context, index) {
                               return SizedBox(height: 10.h);

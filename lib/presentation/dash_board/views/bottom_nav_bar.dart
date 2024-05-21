@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:app/utils/utils.dart';
-import 'package:app/presentation/dash_board/domain/repositories.dart';
+import 'package:app/presentation/dash_board/providers/repositories.dart';
 import 'package:app/presentation/dash_board/views/exports.dart';
 import 'package:app/presentation/transaction/enums.dart';
 import 'package:flutter/material.dart';

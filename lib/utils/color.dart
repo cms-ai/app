@@ -18,4 +18,16 @@ class AppColors {
   static Color textColor1 = const Color(0xFFFFFFFF);
   static Color textColor2 = const Color(0xFFE3B53C);
   static Color subColor1 = const Color(0xFFE84040);
+
+  // subscription color
+  static Color yellow100Color = const Color(0xFFFCAC12);
+  static Color yellow20Color = const Color(0xFFFEEED0);
+  static Color violet100Color = const Color(0xFF7F3DFF);
+  static Color violet20Color = const Color(0xFFEEE5FF);
+  static Color red100Color = const Color(0xFFFD3C4A);
+  static Color red20Color = const Color(0xFFFDD5D7);
+  static Color green100Color = const Color(0xFF00A86B);
+  static Color green20Color = const Color(0xFFCFFAEA);
+  static Color black100Color = const Color(0xFF0D0E0F);
+  static Color black20Color = const Color(0xFFE3E5E5);
 }

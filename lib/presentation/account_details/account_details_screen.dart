@@ -1,3 +1,4 @@
+import 'package:app/data/model/models.dart';
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/exports.dart';
 import 'package:app/presentation/new_account_bank/enums.dart';
@@ -103,7 +104,9 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
                     // physics: NeverScrollableScrollPhysics(),
                     itemCount: 50,
                     itemBuilder: (context, index) {
-                      return CommonTransactionItem();
+                      return CommonTransactionItem(
+                        data: TransactionModel(),
+                      );
                     },
                     separatorBuilder: (context, index) {
                       return SizedBox(height: 10.h);

@@ -1,21 +1,19 @@
 import 'package:app/gen/export.dart';
+import 'package:app/presentation/dash_board/providers/dash_board_provider.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/presentation/common_views/exports.dart';
 import 'package:app/presentation/dash_board/views/home/views/exports.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final filterProvider = ref.watch(filterTransactionProvider);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -45,8 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 ...FilterType.values.map(
                   (e) => _buildFilterTime(
-                    isSelected: e == FilterType.toDay,
+                    isSelected: e == filterProvider,
                     title: e.getTitle(),
+                    onTap: () {
+                      ref.read(filterTransactionProvider.notifier).state = e;
+                    },
                   ),
                 )
               ],
@@ -61,25 +62,29 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildFilterTime({
     required bool isSelected,
     required String title,
+    required Function onTap,
   }) {
     return Expanded(
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 6.h),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.textColor2.withOpacity(.3)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(50.r),
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 14.sp,
-              color:
-                  isSelected ? AppColors.textColor2 : const Color(0xFF91919F),
-              fontFamily: FontFamily.poppins,
-              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+      child: GestureDetector(
+        onTap: () => onTap(),
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 6.h),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppColors.textColor2.withOpacity(.3)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(50.r),
+          ),
+          child: Center(
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 14.sp,
+                color:
+                    isSelected ? AppColors.textColor2 : const Color(0xFF91919F),
+                fontFamily: FontFamily.poppins,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+              ),
             ),
           ),
         ),

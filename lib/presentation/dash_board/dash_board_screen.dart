@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app/presentation/dash_board/domain/repositories.dart';
+import 'package:app/presentation/dash_board/providers/repositories.dart';
 import 'package:app/presentation/dash_board/views/exports.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';

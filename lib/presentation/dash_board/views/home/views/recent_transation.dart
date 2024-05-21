@@ -1,6 +1,8 @@
+import 'package:app/data/model/models.dart';
 import 'package:app/gen/export.dart';
+import 'package:app/providers/exports.dart';
 import 'package:app/utils/utils.dart';
-import 'package:app/presentation/dash_board/domain/dash_board_repository_provider.dart';
+import 'package:app/presentation/dash_board/providers/dash_board_provider.dart';
 import 'package:app/presentation/dash_board/views/enums.dart';
 import 'package:app/presentation/exports.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,8 @@ class RecentTransaction extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final transactionList = ref.watch(transactionListNotifierProvider);
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10),
       child: Column(
@@ -49,10 +53,11 @@ class RecentTransaction extends ConsumerWidget {
           SizedBox(height: 20.h),
           ListView.separated(
             shrinkWrap: true,
-            // physics: NeverScrollableScrollPhysics(),
-            itemCount: 3,
+            itemCount: transactionList.length,
             itemBuilder: (context, index) {
-              return CommonTransactionItem();
+              return CommonTransactionItem(
+                data: transactionList[index],
+              );
             },
             separatorBuilder: (context, index) {
               return SizedBox(height: 10.h);

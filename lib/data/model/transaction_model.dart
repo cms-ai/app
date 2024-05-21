@@ -1,3 +1,4 @@
+import 'package:app/utils/enums/enums.dart';
 import 'package:equatable/equatable.dart';
 
 class TransactionModel extends Equatable {
@@ -64,5 +65,29 @@ class TransactionModel extends Equatable {
       if (createdAt != null) "createdAt": createdAt,
       if (updateAt != null) "updateAt": updateAt,
     };
+  }
+}
+
+extension TransactionModelExt on TransactionModel {
+  TransactionType getTransactionType() {
+    final index = TransactionType.values
+        .indexWhere((element) => element.name == transactionType);
+    switch (index) {
+      case -1:
+        return TransactionType.expense;
+      default:
+        return TransactionType.values[index];
+    }
+  }
+
+  TransactionCategoryEnum getTransCategoryType() {
+    final index = TransactionCategoryEnum.values
+        .indexWhere((element) => element.name == category);
+    switch (index) {
+      case -1:
+        return TransactionCategoryEnum.passiveIncome;
+      default:
+        return TransactionCategoryEnum.values[index];
+    }
   }
 }

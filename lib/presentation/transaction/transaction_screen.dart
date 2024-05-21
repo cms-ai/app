@@ -43,6 +43,7 @@ class TransactionScreen extends HookConsumerWidget {
       fetchData();
       return () {};
     }, []);
+    
 
     final size = MediaQuery.of(context).size;
     return Scaffold(

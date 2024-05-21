@@ -1,21 +1,34 @@
 import 'package:app/gen/export.dart';
+import 'package:app/providers/exports.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/presentation/common_views/exports.dart';
 import 'package:app/presentation/dash_board/views/transition/views/filter_body_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class TransitionBodyScreen extends StatefulWidget {
+class TransitionBodyScreen extends HookConsumerWidget {
   const TransitionBodyScreen({super.key});
 
   @override
-  State<TransitionBodyScreen> createState() => _TransitionBodyScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final transactionList = ref.watch(transactionListNotifierProvider);
+    final fetchInitData = useCallback(() async {
+      final String? userId = await AppSharePreferences().getUserId();
+      ref
+          .read(transactionListNotifierProvider.notifier)
+          .getTransactionList(userId: userId!);
+    });
+    // Main Function
+    useEffect(() {
+      // init data
+      fetchInitData();
+      return () {};
+    }, []);
+    // End Main function
 
-class _TransitionBodyScreenState extends State<TransitionBodyScreen> {
-  @override
-  Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
@@ -57,10 +70,11 @@ class _TransitionBodyScreenState extends State<TransitionBodyScreen> {
           Expanded(
             child: ListView.separated(
               shrinkWrap: true,
-              // physics: NeverScrollableScrollPhysics(),
-              itemCount: 50,
+              itemCount: transactionList.length,
               itemBuilder: (context, index) {
-                return CommonTransactionItem();
+                return CommonTransactionItem(
+                  data: transactionList[index],
+                );
               },
               separatorBuilder: (context, index) {
                 return SizedBox(height: 10.h);

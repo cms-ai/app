@@ -1,3 +1,7 @@
+import 'package:app/gen/export.dart';
+import 'package:app/utils/utils.dart';
+import 'package:flutter/material.dart';
+
 enum TransactionType {
   expense,
   income; // method
@@ -14,6 +18,24 @@ extension TransactionTypeExt on TransactionType {
         return "Expense";
       case TransactionType.income:
         return "Income";
+    }
+  }
+
+  Color getColor() {
+    switch (this) {
+      case TransactionType.expense:
+        return AppColors.primaryColor2;
+      case TransactionType.income:
+        return Colors.green;
+    }
+  }
+
+  String getStringMoney(int number) {
+    switch (this) {
+      case TransactionType.expense:
+        return "- \$$number";
+      case TransactionType.income:
+        return "+ \$$number";
     }
   }
 }
@@ -47,6 +69,36 @@ extension TransactionCategoryEnumExt on TransactionCategoryEnum {
         return "Salary";
       case TransactionCategoryEnum.passiveIncome:
         return "Passive Income";
+    }
+  }
+
+  Color getBgColor() {
+    switch (this) {
+      case TransactionCategoryEnum.shopping:
+        return AppColors.yellow20Color;
+      case TransactionCategoryEnum.subscription:
+        return AppColors.violet20Color;
+      case TransactionCategoryEnum.food:
+        return AppColors.red20Color;
+      case TransactionCategoryEnum.salary:
+        return AppColors.green20Color;
+      case TransactionCategoryEnum.passiveIncome:
+        return AppColors.black20Color;
+    }
+  }
+
+  SvgGenImage getIcon() {
+    switch (this) {
+      case TransactionCategoryEnum.shopping:
+        return Assets.icons.icShoppingBag;
+      case TransactionCategoryEnum.subscription:
+        return Assets.icons.icRecurringBill;
+      case TransactionCategoryEnum.food:
+        return Assets.icons.icRestaurant;
+      case TransactionCategoryEnum.salary:
+        return Assets.icons.icSalary;
+      case TransactionCategoryEnum.passiveIncome:
+        return Assets.icons.icIncome;
     }
   }
 }

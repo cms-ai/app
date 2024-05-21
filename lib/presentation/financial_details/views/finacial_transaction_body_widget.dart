@@ -1,4 +1,4 @@
-
+import 'package:app/data/model/models.dart';
 import 'package:app/gen/export.dart';
 import 'package:app/presentation/common_views/exports.dart';
 import 'package:flutter/material.dart';
@@ -79,8 +79,7 @@ class FinacialTransactionBodyWidget extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: 20.w, vertical: 4.h),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
             decoration: BoxDecoration(
               border: Border.all(
                 color: AppColors.textColor2,
@@ -90,8 +89,7 @@ class FinacialTransactionBodyWidget extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Assets.icons.icArrowDown
-                    .svg(color: AppColors.textColor1),
+                Assets.icons.icArrowDown.svg(color: AppColors.textColor1),
                 const SizedBox(width: 10),
                 Text(
                   "Transaction",
@@ -114,7 +112,9 @@ class FinacialTransactionBodyWidget extends StatelessWidget {
             // physics: NeverScrollableScrollPhysics(),
             itemCount: 6,
             itemBuilder: (context, index) {
-              return CommonTransactionItem();
+              return CommonTransactionItem(
+                data: TransactionModel(),
+              );
             },
             separatorBuilder: (context, index) {
               return SizedBox(height: 10.h);

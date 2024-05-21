@@ -35,6 +35,9 @@ class $AssetsIconsGen {
   SvgGenImage get icBugdetLimit =>
       const SvgGenImage('assets/icons/ic_bugdet_limit.svg');
 
+  /// File path: assets/icons/ic_car.svg
+  SvgGenImage get icCar => const SvgGenImage('assets/icons/ic_car.svg');
+
   /// File path: assets/icons/ic_chase.svg
   SvgGenImage get icChase => const SvgGenImage('assets/icons/ic_chase.svg');
 
@@ -59,9 +62,24 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_mandiri.svg
   SvgGenImage get icMandiri => const SvgGenImage('assets/icons/ic_mandiri.svg');
 
+  /// File path: assets/icons/ic_recurring_bill.svg
+  SvgGenImage get icRecurringBill =>
+      const SvgGenImage('assets/icons/ic_recurring_bill.svg');
+
+  /// File path: assets/icons/ic_restaurant.svg
+  SvgGenImage get icRestaurant =>
+      const SvgGenImage('assets/icons/ic_restaurant.svg');
+
+  /// File path: assets/icons/ic_salary.svg
+  SvgGenImage get icSalary => const SvgGenImage('assets/icons/ic_salary.svg');
+
   /// File path: assets/icons/ic_settings.svg
   SvgGenImage get icSettings =>
       const SvgGenImage('assets/icons/ic_settings.svg');
+
+  /// File path: assets/icons/ic_shopping_bag.svg
+  SvgGenImage get icShoppingBag =>
+      const SvgGenImage('assets/icons/ic_shopping_bag.svg');
 
   /// File path: assets/icons/ic_sign_up_success.svg
   SvgGenImage get icSignUpSuccess =>
@@ -80,6 +98,7 @@ class $AssetsIconsGen {
         icBankAmerica,
         icBca,
         icBugdetLimit,
+        icCar,
         icChase,
         icCiti,
         icExpense,
@@ -88,7 +107,11 @@ class $AssetsIconsGen {
         icJago,
         icLogout,
         icMandiri,
+        icRecurringBill,
+        icRestaurant,
+        icSalary,
         icSettings,
+        icShoppingBag,
         icSignUpSuccess,
         icUpload,
         paypal
