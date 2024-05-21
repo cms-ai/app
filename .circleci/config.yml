@@ -9,17 +9,16 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-    
+
     steps:
       - checkout
 
-      - flutter/install_sdk: 
+      - flutter/install_sdk:
           version: 3.19.6
 
       - flutter/install_pub:
           cache-version: v1
 
-    
       - run:
           name: Add Google services to App
           command: |
@@ -37,7 +36,3 @@ jobs:
 
       - store_artifacts:
           path: build/app/outputs/flutter-apk/app-release.apk
-Description of Configuration:
-The jobs the section defines the build job, which is named build. The executor the section specifies the environment in which the job will run. In this case, it uses an Android machine with a medium resource class.
-
-The steps The section lists the individual commands that will be executed as part of the job. The first step is to check out the code from th
