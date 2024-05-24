@@ -20,7 +20,7 @@ final delBudgetProvider =
 final getBudgetProvider =
     Provider<GetBudget>((ref) => GetBudget(ref.read(budgetProvider)));
 
-final budgetListProvider =
+final budgetListNotifierProvider =
     StateNotifierProvider<BudgetListNotifier, List<BudgetModel>>(
   (ref) => BudgetListNotifier(
     ref.read(addBudgetProvider),

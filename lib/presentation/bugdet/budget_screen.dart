@@ -1,6 +1,9 @@
 import 'package:app/gen/export.dart';
+import 'package:app/presentation/bugdet/providers/budget_screen_extension.dart';
+import 'package:app/presentation/common_views/common_date_picker.dart';
 import 'package:app/presentation/exports.dart';
 import 'package:app/utils/enums/enums.dart';
+import 'package:flutter/cupertino.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
@@ -16,9 +19,25 @@ class BudgetScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Varibles listener
     ValueNotifier<TransactionCategoryEnum?> selectedCategory = useState(null);
+    ValueNotifier<DateTime?> dateFrom = useState(null);
+    ValueNotifier<DateTime?> dateTo = useState(null);
+    ValueNotifier<bool> enableAddBtn = useState(false);
     late TextEditingController controller = useTextEditingController(text: "0");
 
     final size = MediaQuery.of(context).size;
+
+    void checkEnableAddBtn() {
+      int? moneyLimit = int.tryParse(controller.text.trim());
+      if (![selectedCategory.value, dateFrom.value, dateTo.value, moneyLimit]
+              .contains(null) &&
+          dateFrom.value!.isBefore(dateTo.value!) &&
+          moneyLimit! > 0) {
+        enableAddBtn.value = true;
+      } else {
+        enableAddBtn.value = false;
+      }
+    }
+
     return Scaffold(
       body: Stack(
         children: [
@@ -101,7 +120,9 @@ class BudgetScreen extends HookConsumerWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          checkEnableAddBtn();
+                        },
                       ),
                     ),
                   ],
@@ -122,21 +143,95 @@ class BudgetScreen extends HookConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CommonDropdownButton(
-                        customMargin: EdgeInsets.only(bottom: 14),
+                        customMargin: const EdgeInsets.only(bottom: 14),
                         hintText: "Category",
                         items: TransactionCategoryEnum.toStringList(),
                         onChange: (p0, selectIndex) {
                           selectedCategory.value =
                               TransactionCategoryEnum.values[selectIndex];
+                          checkEnableAddBtn();
                         },
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CommonTextField(
+                              customMargin: const EdgeInsets.only(bottom: 14),
+                              readOnly: true,
+                              controller: TextEditingController(
+                                  text: dateFrom.value != null
+                                      ? AppDateTime.convertToDateTimeString(
+                                          dateFrom
+                                              .value!.millisecondsSinceEpoch)
+                                      : ""),
+                              hintText: "Date from",
+                              textFieldStyle: TextFieldStyleEnum.border,
+                              onTap: () {
+                                CommonButtonSheet(
+                                  customChild: CommonDatePicker(
+                                    initialDateTime: dateFrom.value,
+                                    mode: CupertinoDatePickerMode.date,
+                                    onDateTimeChanged: (time) {
+                                      dateFrom.value = time;
+                                      checkEnableAddBtn();
+                                    },
+                                  ),
+                                ).show(context);
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 20.w),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: CommonTextField(
+                                customMargin: const EdgeInsets.only(bottom: 14),
+                                readOnly: true,
+                                hintText: "Date to",
+                                controller: TextEditingController(
+                                    text: dateTo.value != null
+                                        ? AppDateTime.convertToDateTimeString(
+                                            dateTo
+                                                .value!.millisecondsSinceEpoch)
+                                        : ""),
+                                textFieldStyle: TextFieldStyleEnum.border,
+                                onTap: () {
+                                  CommonButtonSheet(
+                                    customChild: CommonDatePicker(
+                                      initialDateTime: dateTo.value,
+                                      mode: CupertinoDatePickerMode.date,
+                                      onDateTimeChanged: (time) {
+                                        dateTo.value = time;
+                                        checkEnableAddBtn();
+                                      },
+                                    ),
+                                  ).show(context);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 20.h),
                       CommonGradientButton(
                         customWidth: double.infinity,
                         contentButton: "Add",
-                        onTap: () {
-                          context.goNamed(AppRouters.signUpSuccessRoute);
-                        },
+                        customColor: enableAddBtn.value ? null : Colors.grey,
+                        onTap: enableAddBtn.value
+                            ? () {
+                                handleAddBudget(
+                                  ref,
+                                  context,
+                                  budgetName: selectedCategory.value!.name,
+                                  dateFrom:
+                                      dateFrom.value!.millisecondsSinceEpoch,
+                                  dateTo: dateTo.value!.millisecondsSinceEpoch,
+                                  maxMoney:
+                                      int.tryParse(controller.text.trim()) ?? 0,
+                                );
+                              }
+                            : null,
                       ),
                       SizedBox(height: 20.h)
                     ],

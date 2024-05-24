@@ -9,6 +9,7 @@ class CommonGradientButton extends StatelessWidget {
   final Function()? onTap;
   final Color? customColor;
   final Widget? prefixWidget;
+  final bool isActive;
   const CommonGradientButton({
     super.key,
     required this.contentButton,
@@ -16,6 +17,7 @@ class CommonGradientButton extends StatelessWidget {
     this.customWidth,
     this.customColor,
     this.prefixWidget,
+    this.isActive = true,
   });
 
   @override

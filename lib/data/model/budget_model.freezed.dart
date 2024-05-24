@@ -22,6 +22,7 @@ BudgetModel _$BudgetModelFromJson(Map<String, dynamic> json) {
 mixin _$BudgetModel {
   String? get budgetId => throw _privateConstructorUsedError;
   String? get budgetName => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
   int? get dateFrom => throw _privateConstructorUsedError;
   int? get dateTo => throw _privateConstructorUsedError;
   int? get maxMoney => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $BudgetModelCopyWith<$Res> {
   $Res call(
       {String? budgetId,
       String? budgetName,
+      String? userId,
       int? dateFrom,
       int? dateTo,
       int? maxMoney});
@@ -61,6 +63,7 @@ class _$BudgetModelCopyWithImpl<$Res, $Val extends BudgetModel>
   $Res call({
     Object? budgetId = freezed,
     Object? budgetName = freezed,
+    Object? userId = freezed,
     Object? dateFrom = freezed,
     Object? dateTo = freezed,
     Object? maxMoney = freezed,
@@ -73,6 +76,10 @@ class _$BudgetModelCopyWithImpl<$Res, $Val extends BudgetModel>
       budgetName: freezed == budgetName
           ? _value.budgetName
           : budgetName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String?,
       dateFrom: freezed == dateFrom
           ? _value.dateFrom
@@ -101,6 +108,7 @@ abstract class _$$BudgetModelImplCopyWith<$Res>
   $Res call(
       {String? budgetId,
       String? budgetName,
+      String? userId,
       int? dateFrom,
       int? dateTo,
       int? maxMoney});
@@ -119,28 +127,33 @@ class __$$BudgetModelImplCopyWithImpl<$Res>
   $Res call({
     Object? budgetId = freezed,
     Object? budgetName = freezed,
+    Object? userId = freezed,
     Object? dateFrom = freezed,
     Object? dateTo = freezed,
     Object? maxMoney = freezed,
   }) {
     return _then(_$BudgetModelImpl(
-      freezed == budgetId
+      budgetId: freezed == budgetId
           ? _value.budgetId
           : budgetId // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == budgetName
+      budgetName: freezed == budgetName
           ? _value.budgetName
           : budgetName // ignore: cast_nullable_to_non_nullable
               as String?,
-      freezed == dateFrom
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dateFrom: freezed == dateFrom
           ? _value.dateFrom
           : dateFrom // ignore: cast_nullable_to_non_nullable
               as int?,
-      freezed == dateTo
+      dateTo: freezed == dateTo
           ? _value.dateTo
           : dateTo // ignore: cast_nullable_to_non_nullable
               as int?,
-      freezed == maxMoney
+      maxMoney: freezed == maxMoney
           ? _value.maxMoney
           : maxMoney // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -151,8 +164,13 @@ class __$$BudgetModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$BudgetModelImpl implements _BudgetModel {
-  _$BudgetModelImpl(this.budgetId, this.budgetName, this.dateFrom, this.dateTo,
-      this.maxMoney);
+  _$BudgetModelImpl(
+      {this.budgetId,
+      this.budgetName,
+      this.userId,
+      this.dateFrom,
+      this.dateTo,
+      this.maxMoney});
 
   factory _$BudgetModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BudgetModelImplFromJson(json);
@@ -162,6 +180,8 @@ class _$BudgetModelImpl implements _BudgetModel {
   @override
   final String? budgetName;
   @override
+  final String? userId;
+  @override
   final int? dateFrom;
   @override
   final int? dateTo;
@@ -170,7 +190,7 @@ class _$BudgetModelImpl implements _BudgetModel {
 
   @override
   String toString() {
-    return 'BudgetModel(budgetId: $budgetId, budgetName: $budgetName, dateFrom: $dateFrom, dateTo: $dateTo, maxMoney: $maxMoney)';
+    return 'BudgetModel(budgetId: $budgetId, budgetName: $budgetName, userId: $userId, dateFrom: $dateFrom, dateTo: $dateTo, maxMoney: $maxMoney)';
   }
 
   @override
@@ -182,6 +202,7 @@ class _$BudgetModelImpl implements _BudgetModel {
                 other.budgetId == budgetId) &&
             (identical(other.budgetName, budgetName) ||
                 other.budgetName == budgetName) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.dateFrom, dateFrom) ||
                 other.dateFrom == dateFrom) &&
             (identical(other.dateTo, dateTo) || other.dateTo == dateTo) &&
@@ -192,7 +213,7 @@ class _$BudgetModelImpl implements _BudgetModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, budgetId, budgetName, dateFrom, dateTo, maxMoney);
+      runtimeType, budgetId, budgetName, userId, dateFrom, dateTo, maxMoney);
 
   @JsonKey(ignore: true)
   @override
@@ -210,11 +231,12 @@ class _$BudgetModelImpl implements _BudgetModel {
 
 abstract class _BudgetModel implements BudgetModel {
   factory _BudgetModel(
-      final String? budgetId,
+      {final String? budgetId,
       final String? budgetName,
+      final String? userId,
       final int? dateFrom,
       final int? dateTo,
-      final int? maxMoney) = _$BudgetModelImpl;
+      final int? maxMoney}) = _$BudgetModelImpl;
 
   factory _BudgetModel.fromJson(Map<String, dynamic> json) =
       _$BudgetModelImpl.fromJson;
@@ -223,6 +245,8 @@ abstract class _BudgetModel implements BudgetModel {
   String? get budgetId;
   @override
   String? get budgetName;
+  @override
+  String? get userId;
   @override
   int? get dateFrom;
   @override

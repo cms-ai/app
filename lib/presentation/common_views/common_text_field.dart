@@ -15,6 +15,7 @@ class CommonTextField extends StatefulWidget {
   final TextFieldStyleEnum textFieldStyle;
   final bool readOnly;
   final TextEditingController? controller;
+  final void Function()? onTap;
   const CommonTextField({
     super.key,
     this.customMargin,
@@ -23,6 +24,7 @@ class CommonTextField extends StatefulWidget {
     this.textFieldStyle = TextFieldStyleEnum.initial,
     this.readOnly = false,
     this.controller,
+    this.onTap,
   });
 
   @override
@@ -64,6 +66,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
           ),
         ),
         onChanged: widget.onChanged,
+        onTap: widget.onTap,
       ),
     );
   }
@@ -95,6 +98,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
           ),
         ),
         onChanged: widget.onChanged,
+        onTap: widget.onTap,
       ),
     );
   }

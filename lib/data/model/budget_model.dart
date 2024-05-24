@@ -5,14 +5,15 @@ part 'budget_model.g.dart';
 
 @freezed
 class BudgetModel with _$BudgetModel {
-
-  factory BudgetModel(
+  factory BudgetModel({
     String? budgetId,
     String? budgetName,
+    String? userId,
     int? dateFrom,
     int? dateTo,
     int? maxMoney,
-  ) = _BudgetModel;
+  }) = _BudgetModel;
 
-  factory BudgetModel.fromJson(Map<String, dynamic> json) => _$BudgetModelFromJson(json);
+  factory BudgetModel.fromJson(Map<String, dynamic> json) =>
+      _$BudgetModelFromJson(json);
 }
