@@ -4,34 +4,21 @@ import 'package:app/utils/enums/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class BudgetScreen extends StatefulWidget {
-  const BudgetScreen({
-    super.key,
-  });
-
-  @override
-  State<BudgetScreen> createState() => _BudgetScreenState();
-}
-
-class _BudgetScreenState extends State<BudgetScreen> {
-  final TextEditingController controller = TextEditingController(text: "0,00");
-  @override
-  void initState() {
-    super.initState();
-  }
+class BudgetScreen extends HookConsumerWidget {
+  const BudgetScreen({super.key});
 
   @override
-  void dispose() {
-    super.dispose();
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Varibles listener
+    ValueNotifier<TransactionCategoryEnum?> selectedCategory = useState(null);
+    late TextEditingController controller = useTextEditingController(text: "0");
 
-  @override
-  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Stack(
         children: [
@@ -138,6 +125,10 @@ class _BudgetScreenState extends State<BudgetScreen> {
                         customMargin: EdgeInsets.only(bottom: 14),
                         hintText: "Category",
                         items: TransactionCategoryEnum.toStringList(),
+                        onChange: (p0, selectIndex) {
+                          selectedCategory.value =
+                              TransactionCategoryEnum.values[selectIndex];
+                        },
                       ),
                       SizedBox(height: 20.h),
                       CommonGradientButton(

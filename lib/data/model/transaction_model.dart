@@ -84,6 +84,7 @@ extension TransactionModelExt on TransactionModel {
     final index = TransactionCategoryEnum.values
         .indexWhere((element) => element.name == category);
     switch (index) {
+      // not found with input key
       case -1:
         return TransactionCategoryEnum.passiveIncome;
       default:

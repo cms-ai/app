@@ -8,12 +8,14 @@
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vector_graphics/vector_graphics.dart';
 
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// Directory path: assets/icons/bottom_nav_bar
   $AssetsIconsBottomNavBarGen get bottomNavBar =>
       const $AssetsIconsBottomNavBarGen();
 
@@ -62,6 +64,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_mandiri.svg
   SvgGenImage get icMandiri => const SvgGenImage('assets/icons/ic_mandiri.svg');
 
+  /// File path: assets/icons/ic_passive_income.svg
+  SvgGenImage get icPassiveIncome =>
+      const SvgGenImage('assets/icons/ic_passive_income.svg');
+
   /// File path: assets/icons/ic_recurring_bill.svg
   SvgGenImage get icRecurringBill =>
       const SvgGenImage('assets/icons/ic_recurring_bill.svg');
@@ -107,6 +113,7 @@ class $AssetsIconsGen {
         icJago,
         icLogout,
         icMandiri,
+        icPassiveIncome,
         icRecurringBill,
         icRestaurant,
         icSalary,
@@ -121,6 +128,7 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// Directory path: assets/images/intro
   $AssetsImagesIntroGen get intro => const $AssetsImagesIntroGen();
 
   /// File path: assets/images/logo_with_image_1.png
@@ -186,9 +194,11 @@ class Assets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(this._assetName);
+  const AssetGenImage(this._assetName, {this.size = null});
 
   final String _assetName;
+
+  final Size? size;
 
   Image image({
     Key? key,
@@ -260,9 +270,20 @@ class AssetGenImage {
 }
 
 class SvgGenImage {
-  const SvgGenImage(this._assetName);
+  const SvgGenImage(
+    this._assetName, {
+    this.size = null,
+  }) : _isVecFormat = false;
+
+  const SvgGenImage.vec(
+    this._assetName, {
+    this.size = null,
+  }) : _isVecFormat = true;
 
   final String _assetName;
+
+  final Size? size;
+  final bool _isVecFormat;
 
   SvgPicture svg({
     Key? key,
@@ -277,19 +298,21 @@ class SvgGenImage {
     WidgetBuilder? placeholderBuilder,
     String? semanticsLabel,
     bool excludeFromSemantics = false,
-    SvgTheme theme = const SvgTheme(),
+    SvgTheme? theme,
     ColorFilter? colorFilter,
     Clip clipBehavior = Clip.hardEdge,
     @deprecated Color? color,
     @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
     @deprecated bool cacheColorFilter = false,
   }) {
-    return SvgPicture.asset(
-      _assetName,
+    return SvgPicture(
+      _isVecFormat
+          ? AssetBytesLoader(_assetName,
+              assetBundle: bundle, packageName: package)
+          : SvgAssetLoader(_assetName,
+              assetBundle: bundle, packageName: package),
       key: key,
       matchTextDirection: matchTextDirection,
-      bundle: bundle,
-      package: package,
       width: width,
       height: height,
       fit: fit,
@@ -299,9 +322,8 @@ class SvgGenImage {
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
       theme: theme,
-      colorFilter: colorFilter,
-      color: color,
-      colorBlendMode: colorBlendMode,
+      colorFilter: colorFilter ??
+          (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
     );
