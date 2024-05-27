@@ -10,6 +10,7 @@ class TransactionModel extends Equatable {
   final String? userId;
   final int? moneyValue;
   final int? createdAt;
+  final int? dateTime;
   final int? updateAt;
   const TransactionModel({
     this.transactionId,
@@ -18,6 +19,7 @@ class TransactionModel extends Equatable {
     this.category,
     this.accountBankId,
     this.userId,
+    this.dateTime,
     this.moneyValue,
     this.createdAt,
     this.updateAt,
@@ -31,6 +33,7 @@ class TransactionModel extends Equatable {
         category,
         accountBankId,
         userId,
+        dateTime,
         moneyValue,
         createdAt,
         updateAt,
@@ -47,6 +50,7 @@ class TransactionModel extends Equatable {
       accountBankId:
           data.containsKey("accountBankId") ? data["accountBankId"] : null,
       userId: data.containsKey("userId") ? data["userId"] : null,
+      dateTime: data.containsKey("dateTime") ? data["dateTime"] : null,
       moneyValue: data.containsKey("moneyValue") ? data["moneyValue"] : null,
       createdAt: data.containsKey("createdAt") ? data["createdAt"] : null,
       updateAt: data.containsKey("updateAt") ? data["updateAt"] : null,
@@ -62,6 +66,7 @@ class TransactionModel extends Equatable {
       if (accountBankId != null) "accountBankId": accountBankId,
       if (userId != null) "userId": userId,
       if (moneyValue != null) "moneyValue": moneyValue,
+      if (dateTime != null) "dateTime": dateTime,
       if (createdAt != null) "createdAt": createdAt,
       if (updateAt != null) "updateAt": updateAt,
     };

@@ -66,7 +66,7 @@ class DashBoardScreen extends ConsumerWidget {
                   const HomeScreen(),
                   const TransitionBodyScreen(),
                   Container(),
-                  const BudgetScreen(),
+                  const BudgetBodyScreen(),
                   const ProfileScreen(),
                 ],
               ),

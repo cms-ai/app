@@ -1,5 +1,7 @@
 import 'package:app/gen/export.dart';
+import 'package:app/presentation/budget_details/data/budget_extra_model.dart';
 import 'package:app/presentation/exports.dart';
+import 'package:app/utils/enums/enums.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
@@ -28,8 +30,12 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final (data, spentMoney) =
+        GoRouterState.of(context).extra as BudgetExtraModel;
     final size = MediaQuery.of(context).size;
-
+    final remainMoney = (data.maxMoney ?? 0) - spentMoney;
+    final indexCategory = TransactionCategoryEnum.values
+        .indexWhere((element) => element.name == data.budgetName);
     return Scaffold(
       body: Stack(
         children: [
@@ -69,7 +75,8 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                       EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
                   decoration: BoxDecoration(
                       border: Border.all(
-                        color: AppColors.textColor2,
+                        color: TransactionCategoryEnum.values[indexCategory]
+                            .getBgColor(),
                       ),
                       borderRadius: BorderRadius.circular(24.r)),
                   child: Row(
@@ -78,16 +85,19 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                       Container(
                         width: 32.h,
                         height: 32.h,
-                        padding: EdgeInsets.all(10.h),
+                        padding: EdgeInsets.all(4.h),
                         decoration: BoxDecoration(
-                          color: AppColors.textColor2,
+                          color: TransactionCategoryEnum.values[indexCategory]
+                              .getBgColor(),
                           borderRadius: BorderRadius.circular(10.r),
                         ),
-                        child: Assets.icons.icExpense.svg(),
+                        child: TransactionCategoryEnum.values[indexCategory]
+                            .getIcon()
+                            .svg(),
                       ),
                       SizedBox(width: 10.w),
                       Text(
-                        "Shopping",
+                        data.budgetName ?? "",
                         style: TextStyle(
                           fontSize: 18.sp,
                           color: AppColors.textColor1,
@@ -108,7 +118,7 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                 ),
                 SizedBox(height: 10.h),
                 Text(
-                  r"$4000",
+                  "\$$remainMoney",
                   style: TextStyle(
                     fontSize: 24.sp,
                     color: AppColors.textColor1,
@@ -136,7 +146,9 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              color: AppColors.textColor2,
+                              color: TransactionCategoryEnum
+                                  .values[indexCategory]
+                                  .getBgColor(),
                               borderRadius: BorderRadius.circular(10.r)),
                         ),
                       )
@@ -146,30 +158,31 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
-                  decoration: BoxDecoration(
-                      color: AppColors.primaryColor2,
-                      borderRadius: BorderRadius.circular(24.r)),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Assets.icons.icBugdetLimit
-                          // ignore: deprecated_member_use_from_same_package
-                          .svg(color: AppColors.textColor1),
-                      SizedBox(width: 10.w),
-                      Text(
-                        r"You’ve exceed the limit!",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.textColor1,
-                          fontFamily: FontFamily.dMSans,
+                if (remainMoney < 0)
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor2,
+                        borderRadius: BorderRadius.circular(24.r)),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Assets.icons.icBugdetLimit
+                            // ignore: deprecated_member_use_from_same_package
+                            .svg(color: AppColors.textColor1),
+                        SizedBox(width: 10.w),
+                        Text(
+                          r"You’ve exceed the limit!",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.textColor1,
+                            fontFamily: FontFamily.dMSans,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
                 const Spacer(),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20.w),

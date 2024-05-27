@@ -13,8 +13,7 @@ extension BudgetScreenExtension on BudgetScreen {
     WidgetRef ref,
     BuildContext context, {
     required String budgetName,
-    required int dateFrom,
-    required int dateTo,
+    required int startDate,
     required int maxMoney,
     //
   }) async {
@@ -27,8 +26,7 @@ extension BudgetScreenExtension on BudgetScreen {
         await ref.read(budgetListNotifierProvider.notifier).handleAddBudget(
               BudgetModel(
                 budgetName: budgetName,
-                dateFrom: dateFrom,
-                dateTo: dateTo,
+                startDate: startDate,
                 userId: userId,
                 maxMoney: maxMoney,
               ),

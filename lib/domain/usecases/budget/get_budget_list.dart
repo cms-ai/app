@@ -5,7 +5,9 @@ import 'package:app/domain/repositories/repositories.dart';
 class GetBudget {
   final BudgetRepository repository;
   const GetBudget(this.repository);
-  Future<Result<List<BudgetModel>, Exception>> call(String userId) {
+  Future<Result<List<BudgetModel>, Exception>> call(
+    String userId,
+  ) {
     return repository.getBudgetList(userId);
   }
 }

@@ -1,3 +1,5 @@
+import 'package:app/data/model/models.dart';
+import 'package:app/presentation/budget_details/data/budget_extra_model.dart';
 import 'package:app/presentation/exports.dart';
 import 'package:app/presentation/new_account_bank/enums.dart';
 import 'package:app/presentation/transaction/enums.dart';
@@ -171,7 +173,7 @@ class Routers {
           name: AppRouters.budgetDetailsRoute,
           path: AppRouters.budgetDetailsRoute,
           builder: (BuildContext context, GoRouterState state) {
-            return const BudgetDetailsScreen();
+            return BudgetDetailsScreen();
           },
           routes: const <RouteBase>[],
         ),

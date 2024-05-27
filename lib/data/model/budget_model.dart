@@ -9,8 +9,7 @@ class BudgetModel with _$BudgetModel {
     String? budgetId,
     String? budgetName,
     String? userId,
-    int? dateFrom,
-    int? dateTo,
+    int? startDate,
     int? maxMoney,
   }) = _BudgetModel;
 

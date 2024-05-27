@@ -17,6 +17,7 @@ extension TransactionScreenExt on TransactionScreen {
     required String accountBankId,
     required int moneyValue,
     required String description,
+    required int dateTime,
   }) async {
     EasyLoading.show(status: "Creating...");
     // get user id from share preferences
@@ -31,6 +32,7 @@ extension TransactionScreenExt on TransactionScreen {
                 accountBankId: accountBankId,
                 moneyValue: moneyValue,
                 description: description,
+                dateTime: dateTime,
                 createdAt: DateTime.now().millisecondsSinceEpoch,
                 transactionType: transactionType,
               ),

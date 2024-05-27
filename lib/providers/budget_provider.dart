@@ -56,7 +56,9 @@ class BudgetListNotifier extends StateNotifier<List<BudgetModel>> {
     return _delBudget.call(budgetId);
   }
 
-  Future<Result<List<BudgetModel>, Exception>> getBudgetList(String budgetId) {
-    return _getBudget.call(budgetId);
+  Future<Result<List<BudgetModel>, Exception>> getBudgetList(
+    String userId,
+  ) {
+    return _getBudget.call(userId);
   }
 }

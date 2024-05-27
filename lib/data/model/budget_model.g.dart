@@ -11,8 +11,7 @@ _$BudgetModelImpl _$$BudgetModelImplFromJson(Map<String, dynamic> json) =>
       budgetId: json['budgetId'] as String?,
       budgetName: json['budgetName'] as String?,
       userId: json['userId'] as String?,
-      dateFrom: (json['dateFrom'] as num?)?.toInt(),
-      dateTo: (json['dateTo'] as num?)?.toInt(),
+      startDate: (json['startDate'] as num?)?.toInt(),
       maxMoney: (json['maxMoney'] as num?)?.toInt(),
     );
 
@@ -21,7 +20,6 @@ Map<String, dynamic> _$$BudgetModelImplToJson(_$BudgetModelImpl instance) =>
       'budgetId': instance.budgetId,
       'budgetName': instance.budgetName,
       'userId': instance.userId,
-      'dateFrom': instance.dateFrom,
-      'dateTo': instance.dateTo,
+      'startDate': instance.startDate,
       'maxMoney': instance.maxMoney,
     };

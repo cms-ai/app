@@ -11,6 +11,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class BudgetScreen extends HookConsumerWidget {
   const BudgetScreen({super.key});
@@ -19,8 +20,7 @@ class BudgetScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Varibles listener
     ValueNotifier<TransactionCategoryEnum?> selectedCategory = useState(null);
-    ValueNotifier<DateTime?> dateFrom = useState(null);
-    ValueNotifier<DateTime?> dateTo = useState(null);
+    ValueNotifier<DateTime?> startDate = useState(null);
     ValueNotifier<bool> enableAddBtn = useState(false);
     late TextEditingController controller = useTextEditingController(text: "0");
 
@@ -28,9 +28,8 @@ class BudgetScreen extends HookConsumerWidget {
 
     void checkEnableAddBtn() {
       int? moneyLimit = int.tryParse(controller.text.trim());
-      if (![selectedCategory.value, dateFrom.value, dateTo.value, moneyLimit]
+      if (![selectedCategory.value, startDate.value, moneyLimit]
               .contains(null) &&
-          dateFrom.value!.isBefore(dateTo.value!) &&
           moneyLimit! > 0) {
         enableAddBtn.value = true;
       } else {
@@ -153,65 +152,90 @@ class BudgetScreen extends HookConsumerWidget {
                         },
                       ),
                       SizedBox(height: 10.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CommonTextField(
-                              customMargin: const EdgeInsets.only(bottom: 14),
-                              readOnly: true,
-                              controller: TextEditingController(
-                                  text: dateFrom.value != null
-                                      ? AppDateTime.convertToDateTimeString(
-                                          dateFrom
-                                              .value!.millisecondsSinceEpoch)
-                                      : ""),
-                              hintText: "Date from",
-                              textFieldStyle: TextFieldStyleEnum.border,
-                              onTap: () {
-                                CommonButtonSheet(
-                                  customChild: CommonDatePicker(
-                                    initialDateTime: dateFrom.value,
-                                    mode: CupertinoDatePickerMode.date,
-                                    onDateTimeChanged: (time) {
-                                      dateFrom.value = time;
-                                      checkEnableAddBtn();
-                                    },
-                                  ),
-                                ).show(context);
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: CommonTextField(
+                      //         customMargin: const EdgeInsets.only(bottom: 14),
+                      //         readOnly: true,
+                      //         controller: TextEditingController(
+                      //             text: startDate.value != null
+                      //                 ? AppDateTime.convertToDateTimeString(
+                      //                     startDate
+                      //                         .value!.millisecondsSinceEpoch)
+                      //                 : ""),
+                      //         hintText: "Date from",
+                      //         textFieldStyle: TextFieldStyleEnum.border,
+                      //         onTap: () {
+                      //           CommonButtonSheet(
+                      //             customChild: CommonDatePicker(
+                      //               initialDateTime: startDate.value,
+                      //               mode: CupertinoDatePickerMode.date,
+                      //               onDateTimeChanged: (time) {
+                      //                 startDate.value = time;
+                      //                 checkEnableAddBtn();
+                      //               },
+                      //             ),
+                      //           ).show(context);
+                      //         },
+                      //       ),
+                      //     ),
+                      //     SizedBox(width: 20.w),
+                      //     Expanded(
+                      //       child: GestureDetector(
+                      //         onTap: () {},
+                      //         child: CommonTextField(
+                      //           customMargin: const EdgeInsets.only(bottom: 14),
+                      //           readOnly: true,
+                      //           hintText: "Date to",
+                      //           controller: TextEditingController(
+                      //               text: dateTo.value != null
+                      //                   ? AppDateTime.convertToDateTimeString(
+                      //                       dateTo
+                      //                           .value!.millisecondsSinceEpoch)
+                      //                   : ""),
+                      //           textFieldStyle: TextFieldStyleEnum.border,
+                      //           onTap: () {
+                      //             CommonButtonSheet(
+                      //               customChild: CommonDatePicker(
+                      //                 initialDateTime: dateTo.value,
+                      //                 mode: CupertinoDatePickerMode.date,
+                      //                 onDateTimeChanged: (time) {
+                      //                   dateTo.value = time;
+                      //                   checkEnableAddBtn();
+                      //                 },
+                      //               ),
+                      //             ).show(context);
+                      //           },
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      CommonTextField(
+                        customMargin: const EdgeInsets.only(bottom: 14),
+                        readOnly: true,
+                        controller: TextEditingController(
+                            text: startDate.value != null
+                                ? AppDateTime.convertToDateTimeString(
+                                    startDate.value!.millisecondsSinceEpoch,
+                                    dateFormat: DateFormat("MM/yyyy"),
+                                  )
+                                : ""),
+                        hintText: "Date from",
+                        textFieldStyle: TextFieldStyleEnum.border,
+                        onTap: () {
+                          CommonButtonSheet(
+                            customChild: CommonDatePicker(
+                              initialDateTime: startDate.value,
+                              mode: CupertinoDatePickerMode.monthYear,
+                              onDateTimeChanged: (time) {
+                                startDate.value = time;
+                                checkEnableAddBtn();
                               },
                             ),
-                          ),
-                          SizedBox(width: 20.w),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: CommonTextField(
-                                customMargin: const EdgeInsets.only(bottom: 14),
-                                readOnly: true,
-                                hintText: "Date to",
-                                controller: TextEditingController(
-                                    text: dateTo.value != null
-                                        ? AppDateTime.convertToDateTimeString(
-                                            dateTo
-                                                .value!.millisecondsSinceEpoch)
-                                        : ""),
-                                textFieldStyle: TextFieldStyleEnum.border,
-                                onTap: () {
-                                  CommonButtonSheet(
-                                    customChild: CommonDatePicker(
-                                      initialDateTime: dateTo.value,
-                                      mode: CupertinoDatePickerMode.date,
-                                      onDateTimeChanged: (time) {
-                                        dateTo.value = time;
-                                        checkEnableAddBtn();
-                                      },
-                                    ),
-                                  ).show(context);
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
+                          ).show(context);
+                        },
                       ),
                       SizedBox(height: 20.h),
                       CommonGradientButton(
@@ -224,9 +248,8 @@ class BudgetScreen extends HookConsumerWidget {
                                   ref,
                                   context,
                                   budgetName: selectedCategory.value!.name,
-                                  dateFrom:
-                                      dateFrom.value!.millisecondsSinceEpoch,
-                                  dateTo: dateTo.value!.millisecondsSinceEpoch,
+                                  startDate:
+                                      startDate.value!.millisecondsSinceEpoch,
                                   maxMoney:
                                       int.tryParse(controller.text.trim()) ?? 0,
                                 );

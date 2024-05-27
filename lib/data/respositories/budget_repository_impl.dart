@@ -31,13 +31,15 @@ class BudgetRepositoryImpl extends BudgetRepository {
 
   @override
   Future<Result<List<BudgetModel>, Exception>> getBudgetList(
-      String userId) async {
+    String userId,
+  ) async {
     try {
       final result = await _budgetRef.where("userId", isEqualTo: userId).get();
-      final transactionList = result.docs
+      final budgetResList = result.docs
           .map((element) => BudgetModel.fromJson(element.data()))
           .toList();
-      return Success(transactionList);
+
+      return Success(budgetResList);
     } on Exception catch (e) {
       return Failure(e);
     }

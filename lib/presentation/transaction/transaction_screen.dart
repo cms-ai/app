@@ -1,10 +1,12 @@
 import 'package:app/data/model/models.dart';
 import 'package:app/gen/export.dart';
+import 'package:app/presentation/common_views/common_date_picker.dart';
 import 'package:app/presentation/exports.dart';
 import 'package:app/presentation/transaction/enums.dart';
 import 'package:app/presentation/transaction/extenstion.dart';
 import 'package:app/providers/exports.dart';
 import 'package:app/utils/enums/enums.dart';
+import 'package:flutter/cupertino.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/utils/utils.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class TransactionScreen extends HookConsumerWidget {
   const TransactionScreen({
@@ -25,6 +28,7 @@ class TransactionScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Variables
     final ValueNotifier<String> currentDes = useState("");
+    final ValueNotifier<DateTime?> startDate = useState(null);
     final ValueNotifier<int> currentMoneyValue = useState(0);
     final ValueNotifier<TransactionCategoryEnum?> currentCate = useState(null);
     final ValueNotifier<TransactionType?> currentTrans = useState(null);
@@ -43,7 +47,6 @@ class TransactionScreen extends HookConsumerWidget {
       fetchData();
       return () {};
     }, []);
-    
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -189,10 +192,33 @@ class TransactionScreen extends HookConsumerWidget {
                       ),
                       CommonDropdownButton(
                         hintText: "Transaction Type",
+                        customMargin: const EdgeInsets.only(bottom: 14),
                         items: TransactionType.toStringList(),
                         onChange: (p0, selectIndex) {
                           currentTrans.value =
                               TransactionType.values[selectIndex];
+                        },
+                      ),
+                      CommonTextField(
+                        customMargin: const EdgeInsets.only(bottom: 14),
+                        readOnly: true,
+                        controller: TextEditingController(
+                            text: startDate.value != null
+                                ? AppDateTime.convertToDateTimeString(
+                                    startDate.value!.millisecondsSinceEpoch)
+                                : ""),
+                        hintText: "Date from",
+                        textFieldStyle: TextFieldStyleEnum.border,
+                        onTap: () {
+                          CommonButtonSheet(
+                            customChild: CommonDatePicker(
+                              initialDateTime: startDate.value,
+                              mode: CupertinoDatePickerMode.date,
+                              onDateTimeChanged: (time) {
+                                startDate.value = time;
+                              },
+                            ),
+                          ).show(context);
                         },
                       ),
                       SizedBox(height: 40.h),
@@ -206,6 +232,7 @@ class TransactionScreen extends HookConsumerWidget {
                             moneyValue: currentMoneyValue.value,
                             transactionType: currentTrans.value!.name,
                             description: currentDes.value,
+                            dateTime: startDate.value!.millisecondsSinceEpoch,
                             accountBankId:
                                 currentAccountBank.value!.accountBankId!,
                             category: currentCate.value!.name,

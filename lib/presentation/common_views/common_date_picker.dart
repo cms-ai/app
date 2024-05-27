@@ -16,7 +16,7 @@ class CommonDatePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.primaryColor4,
-      height: 200,
+      height: 300,
       child: CupertinoDatePicker(
         mode: mode,
         initialDateTime: initialDateTime,
